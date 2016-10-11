@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Redux"
+                   namespace="Redux.Database.Domain">
+
+  <class name="DbSob" table="sobs">
+    <id name="UID" column="UID">
+      <generator class="identity"/>
+    </id>
+    <property name="Mesh" column="Mesh"/>
+    <property name="MaxHp" column="MaxHp"/>
+    <property name="Flag" column="Flag"/>
+    <property name="Map" column="Map"/>
+    <property name="X" column="X"/>
+    <property name="Y" column="Y"/>
+    <property name="Name" column="Name"/>
+    <property name="Level" column="Level"/>
+  </class>
+
+</hibernate-mapping>

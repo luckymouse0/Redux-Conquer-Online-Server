@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Redux"
+                   namespace="Redux.Database.Domain">
+
+  <class name="DbItem" table="`items`">
+    <id name="UniqueID" column="`UniqueID`">
+      <generator class="assigned" />
+    </id>
+    <property name="StaticID" column="`StaticID`"/>
+    <property name="Owner" column="`Owner`"/>
+    <property name="Durability" column="`Durability`"/>
+    <property name="Location" column="`Location`"/>
+    <property name="Color" column="`Color`"/>
+    <property name="Plus" column="`Plus`" />
+    <property name="Bless" column="`Bless`"/>
+    <property name="Enchant" column="`Enchant`"/>
+    <property name="Gem1" column="`Gem1`"/>
+    <property name="Gem2" column="`Gem2`"/>   
+    <property name="Effect" column="`Effect`"/>
+    <property name="Locked" column="`Locked`" />
+  </class>
+
+</hibernate-mapping>

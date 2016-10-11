@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Redux"
+                   namespace="Redux.Database.Domain">
+
+  <class name="DbNpc" table="npcs">
+    <id name="UID" column="UID">
+      <generator class="identity" />
+    </id>
+    <property name="Mesh" column="Mesh" />
+    <property name="Map" column="Map" />  
+    <property name="X" column="X" />
+    <property name="Y" column="Y" />
+    <property name="Type" column="Type" />
+  </class>
+
+</hibernate-mapping>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Redux"
+                   namespace="Redux.Database.Domain">
+
+  <class name="DbItemAddition" table="itemadd">
+    <id name="Key" column="Key">
+      <generator class="identity" />
+    </id>
+    <property name="BaseID" column="BaseID" />
+    <property name="Plus" column="Plus" />
+    <property name="Health" column="Health" />
+    <property name="MaximumDamage" column="MaximumDamage" />
+    <property name="MinimumDamage" column="MinimumDamage" />
+    <property name="Defense" column="Defense" />
+    <property name="MagicDamage" column="MagicDamage" />
+    <property name="MagicDefense" column="MagicDefense" />
+    <property name="Accuracy" column="Accuracy" />
+    <property name="Dodge" column="Dodge" />
+  </class>
+
+</hibernate-mapping>

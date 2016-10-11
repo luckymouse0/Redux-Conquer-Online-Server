@@ -1,0 +1,426 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CF5C2922-D9E4-44BE-9D0B-5A4E87803C7E}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Redux</RootNamespace>
+    <AssemblyName>Redux</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;bas</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ManagedOpenSsl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\ManagedOpenSsl.dll</HintPath>
+    </Reference>
+    <Reference Include="msvcrt, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\msvcrt.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=3.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TinyMap, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\TinyMap.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commands.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="ControlForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ControlForm.Designer.cs">
+      <DependentUpon>ControlForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cryptography\GameCryptographer.cs" />
+    <Compile Include="Cryptography\BlowfishExchange.cs" />
+    <Compile Include="Cryptography\AuthCryptographer.cs" />
+    <Compile Include="Cryptography\PasswordCryptography.cs" />
+    <Compile Include="Database\ConquerDataContext.cs" />
+    <Compile Include="Database\Domain\DbNobility.cs" />
+    <Compile Include="Database\Domain\DbEvents.cs" />
+    <Compile Include="Database\Domain\DbGuildMemberInfo.cs" />
+    <Compile Include="Database\Domain\DbGuildAttr.cs" />
+    <Compile Include="Database\Domain\DbGuild.cs" />
+    <Compile Include="Database\Domain\DbAssociate.cs" />
+    <Compile Include="Database\Domain\DbShopItem.cs" />
+    <Compile Include="Database\Domain\DbDropRule.cs" />
+    <Compile Include="Database\Domain\DbSob.cs" />
+    <Compile Include="Database\Domain\DbStat.cs" />
+    <Compile Include="Database\Domain\DbSpawn.cs" />
+    <Compile Include="Database\Domain\DbChatLog.cs" />
+    <Compile Include="Database\Domain\DbItemLog.cs" />
+    <Compile Include="Database\Domain\DbMonstertype.cs" />
+    <Compile Include="Database\Domain\DbNpc.cs" />
+    <Compile Include="Database\Domain\DbMap.cs" />
+    <Compile Include="Database\Domain\DbPortal.cs" />
+    <Compile Include="Database\Domain\DbPassage.cs" />
+    <Compile Include="Database\Domain\DbAccount.cs" />
+    <Compile Include="Database\Domain\DbCharacter.cs" />
+    <Compile Include="Database\Domain\DbItem.cs" />
+    <Compile Include="Database\Domain\DbItemAddition.cs" />
+    <Compile Include="Database\Domain\DbItemInfo.cs" />
+    <Compile Include="Database\Domain\DbMagicType.cs" />
+    <Compile Include="Database\Domain\DbProficiency.cs" />
+    <Compile Include="Database\Domain\DbSkill.cs" />
+    <Compile Include="Database\Readers\IniFile.cs" />
+    <Compile Include="Database\Readers\RebornReader.cs" />
+    <Compile Include="Database\Readers\SettingsReader.cs" />
+    <Compile Include="Database\Readers\ShopReader.cs" />
+    <Compile Include="Database\Readers\StatReader.cs" />
+    <Compile Include="Database\Readers\MagicTypeReader.cs" />
+    <Compile Include="Database\Repositories\AccountRepository.cs" />
+    <Compile Include="Database\Repositories\AssociateRepository.cs" />
+    <Compile Include="Database\Repositories\CharacterRepository.cs" />
+    <Compile Include="Database\Repositories\ChatLogRepository.cs" />
+    <Compile Include="Database\Repositories\NobilityRepository.cs" />
+    <Compile Include="Database\Repositories\EventsRepository.cs" />
+    <Compile Include="Database\Repositories\GuildAttrRepository.cs" />
+    <Compile Include="Database\Repositories\GuildRepository.cs" />
+    <Compile Include="Database\Repositories\ShopitemRepository.cs" />
+    <Compile Include="Database\Repositories\DropRuleRepository.cs" />
+    <Compile Include="Database\Repositories\SobRepository.cs" />
+    <Compile Include="Database\Repositories\StatRepository.cs" />
+    <Compile Include="Database\Repositories\SpawnRepository.cs" />
+    <Compile Include="Database\Repositories\MonsterTypeRepository.cs" />
+    <Compile Include="Database\Repositories\ItemLogRepository.cs" />
+    <Compile Include="Database\Repositories\NpcRepository.cs" />
+    <Compile Include="Database\Repositories\MapRepository.cs" />
+    <Compile Include="Database\Repositories\PassageRepository.cs" />
+    <Compile Include="Database\Repositories\IRepository.cs" />
+    <Compile Include="Database\Repositories\ItemAdditionRepository.cs" />
+    <Compile Include="Database\Repositories\ItemInfoRepository.cs" />
+    <Compile Include="Database\Repositories\ItemRepository.cs" />
+    <Compile Include="Database\Repositories\MagicTypeRepository.cs" />
+    <Compile Include="Database\Repositories\NHibernateHelper.cs" />
+    <Compile Include="Database\Repositories\PortalRepository.cs" />
+    <Compile Include="Database\Repositories\ProficiencyRepository.cs" />
+    <Compile Include="Database\Repositories\Repository.cs" />
+    <Compile Include="Database\Repositories\SkillRepository.cs" />
+    <Compile Include="Database\ServerDatabase.cs" />
+    <Compile Include="Enum\ActionType.cs" />
+    <Compile Include="Enum\AssociateAction.cs" />
+    <Compile Include="Enum\AssociateType.cs" />
+    <Compile Include="Enum\ChatColours.cs" />
+    <Compile Include="Enum\ChatType.cs" />
+    <Compile Include="Enum\ClientStatus.cs" />
+    <Compile Include="Enum\ApplyType.cs" />
+    <Compile Include="Enum\TradeType.cs" />
+    <Compile Include="Enum\NobilityRank.cs" />
+    <Compile Include="Enum\NobilityAction.cs" />
+    <Compile Include="Enum\MentorAction.cs" />
+    <Compile Include="Enum\GuildDonationFlag.cs" />
+    <Compile Include="Enum\GuildAction.cs" />
+    <Compile Include="Enum\GuildRank.cs" />
+    <Compile Include="Enum\WarehouseType.cs" />
+    <Compile Include="Enum\WarehouseAction.cs" />
+    <Compile Include="Enum\TeamInteractionType.cs" />
+    <Compile Include="Enum\TeamMemberAction.cs" />
+    <Compile Include="Enum\SkillID.cs" />
+    <Compile Include="Enum\StringAction.cs" />
+    <Compile Include="Enum\ExamineItemAction.cs" />
+    <Compile Include="Enum\SocketGemAction.cs" />
+    <Compile Include="Enum\DropRuleType.cs" />
+    <Compile Include="Enum\CtrlType.cs" />
+    <Compile Include="Enum\CurrencyType.cs" />
+    <Compile Include="Enum\DataAction.cs" />
+    <Compile Include="Enum\DialogAction.cs" />
+    <Compile Include="Enum\GroundItemAction.cs" />
+    <Compile Include="Enum\InteractAction.cs" />
+    <Compile Include="Enum\ItemAction.cs" />
+    <Compile Include="Enum\ItemInfoAction.cs" />
+    <Compile Include="Enum\ItemLocation.cs" />
+    <Compile Include="Enum\MapTypeFlag.cs" />
+    <Compile Include="Enum\MonsterMode.cs" />
+    <Compile Include="Enum\NpcEvent.cs" />
+    <Compile Include="Enum\NpcType.cs" />
+    <Compile Include="Enum\SkillSort.cs" />
+    <Compile Include="Enum\Permissions.cs" />
+    <Compile Include="Enum\PKMode.cs" />
+    <Compile Include="Enum\ProfessionType.cs" />
+    <Compile Include="Enum\SkillAutoActivation.cs" />
+    <Compile Include="Enum\SkillState.cs" />
+    <Compile Include="Enum\ClientEffect.cs" />
+    <Compile Include="Enum\TargetType.cs" />
+    <Compile Include="Enum\UpdateType.cs" />
+    <Compile Include="Database\Readers\ItemAddReader.cs" />
+    <Compile Include="Database\Readers\ItemTypeReader.cs" />
+    <Compile Include="Events\GuildWar.cs" />
+    <Compile Include="Items\[7250__] SkillBook.cs" />
+    <Compile Include="Items\Gates\[1060024] BirdIslandScroll.cs" />
+    <Compile Include="Items\Gates\[1060023] CastleCityScroll.cs" />
+    <Compile Include="Items\Gates\[1060022] ApeCityScroll.cs" />
+    <Compile Include="Items\Gates\[1060021] DesertCityScroll.cs" />
+    <Compile Include="Items\Gates\[1060020] TwinCityScroll.cs" />
+    <Compile Include="Items\[10600__] HairDye.cs" />
+    <Compile Include="Items\IItem.cs" />
+    <Compile Include="Items\[720027] MeteorScroll.cs" />
+    <Compile Include="Items\Manager.cs" />
+    <Compile Include="Managers\AssociateManager.cs" />
+    <Compile Include="Managers\NobilityManager.cs" />
+    <Compile Include="Managers\GuildManager.cs" />
+    <Compile Include="Managers\TeamManager.cs" />
+    <Compile Include="Managers\WarehouseManager.cs" />
+    <Compile Include="Managers\DropManager.cs" />
+    <Compile Include="Managers\EquipmentManager.cs" />
+    <Compile Include="Managers\MapManager.cs" />
+    <Compile Include="Managers\PlayerManager.cs" />
+    <Compile Include="Managers\CombatManager.cs" />
+    <Compile Include="Managers\SpawnManager.cs" />
+    <Compile Include="Network\BruteforceProtection.cs" />
+    <Compile Include="Network\GameServer.cs" />
+    <Compile Include="Network\LoginServer.cs" />
+    <Compile Include="Network\NetworkClient.cs" />
+    <Compile Include="Network\NetworkClientEvents.cs" />
+    <Compile Include="Network\NetworkServer.cs" />
+    <Compile Include="Npcs\Ape Mountain\[47] Warehouse.cs" />
+    <Compile Include="Npcs\Ape Mountain\[10053] Conductress.cs" />
+    <Compile Include="Npcs\Ape Mountain\[102097] Guild Conductress 3.cs" />
+    <Compile Include="Npcs\Bird Island\[45] Warehouse.cs" />
+    <Compile Include="Npcs\Bird Island\[10056] Conductress.cs" />
+    <Compile Include="Npcs\Bird Island\[102093] Guild Conductress 1.cs" />
+    <Compile Include="Npcs\Desert City\[46] Warehouse.cs" />
+    <Compile Include="Npcs\Desert City\[10051] Conductress.cs" />
+    <Compile Include="Npcs\Desert City\[102091] Guild Conductress 2.cs" />
+    <Compile Include="Npcs\Guild Map\[6010] Warden.cs" />
+    <Compile Include="Npcs\Guild Map\[6702] RightGate.cs" />
+    <Compile Include="Npcs\Guild Map\[6701] LeftGate.cs" />
+    <Compile Include="Npcs\Guild Map\[101611] Guild Conductress 4.cs" />
+    <Compile Include="Npcs\Guild Map\[101613] Guild Conductress 3.cs" />
+    <Compile Include="Npcs\Guild Map\[101615] Guild Conductress 2.cs" />
+    <Compile Include="Npcs\Guild Map\[101617] Guild Conductress 1.cs" />
+    <Compile Include="Npcs\Guild Map\[7000] GuildGateKeeper.cs" />
+    <Compile Include="Npcs\Market\[4450] Market Controller.cs" />
+    <Compile Include="Npcs\Market\[44] Warehouse.cs" />
+    <Compile Include="Npcs\Market\[7050] Compose Items.cs" />
+    <Compile Include="Npcs\Phoenix Castle\[48] Warehouse.cs" />
+    <Compile Include="Npcs\Promotion Centre\[10022] Trojan Star.cs" />
+    <Compile Include="Npcs\Twin City\[10003] GuildDirector.cs" />
+    <Compile Include="Npcs\Twin City\[101617] Boxer.cs" />
+    <Compile Include="Npcs\Twin City\[4293] Mine Admin.cs" />
+    <Compile Include="Npcs\Twin City\[10054] General Peace.cs" />
+    <Compile Include="Npcs\Twin City\[10050] Conductress.cs" />
+    <Compile Include="Npcs\Twin City\[380] Guild Conductress.cs" />
+    <Compile Include="Npcs\Twin City\[43] CaptainLi.cs" />
+    <Compile Include="Npcs\Twin City\[600075] BoxerHuang.cs" />
+    <Compile Include="Npcs\Twin City\[40] Warehouse.cs" />
+    <Compile Include="Npcs\Phoenix Castle\[2002] Conductress.cs" />
+    <Compile Include="Npcs\INpc.cs" />
+    <Compile Include="Npcs\Manager.cs" />
+    <Compile Include="Objects\Account.cs" />
+    <Compile Include="Objects\Associate.cs" />
+    <Compile Include="Objects\PlayerShop.cs" />
+    <Compile Include="Objects\SOB.cs" />
+    <Compile Include="Objects\TeamMember.cs" />
+    <Compile Include="Objects\Entity.cs" />
+    <Compile Include="Objects\Monster.cs" />
+    <Compile Include="Objects\Npc.cs" />
+    <Compile Include="Objects\Player.cs" />
+    <Compile Include="Packets\Game\[1108]VendorItem.cs" />
+    <Compile Include="Packets\Game\[1056]Trade.cs" />
+    <Compile Include="Packets\Game\[2033] AssociateInformation.cs" />
+    <Compile Include="Packets\Game\[2064] Nobility.cs" />
+    <Compile Include="Packets\Game\[2065] MentorAction.cs" />
+    <Compile Include="Packets\Game\[2066]TestPacket.cs" />
+    <Compile Include="Packets\Game\[2067] MentorPrize.cs" />
+    <Compile Include="Packets\Game\[2066] MentorInformation.cs" />
+    <Compile Include="Packets\Game\[1109] Sob Spawn.cs" />
+    <Compile Include="Packets\Game\[1112] GuildMemberInfo.cs" />
+    <Compile Include="Packets\Game\[2102] GuildMemberInfo.cs" />
+    <Compile Include="Packets\Game\[1107] Guild.cs" />
+    <Compile Include="Packets\Game\[1106] GuildAttrInfo.cs" />
+    <Compile Include="Packets\Game\[1058] GuildDonation.cs" />
+    <Compile Include="Packets\Game\[1102] WarehouseAction.cs" />
+    <Compile Include="Packets\Game\[1023] TeamInteraction.cs" />
+    <Compile Include="Packets\Game\[1026] TeamMemberInformation.cs" />
+    <Compile Include="Packets\Game\[2036] ComposePacket.cs" />
+    <Compile Include="Packets\Game\[1015] Strings.cs" />
+    <Compile Include="Packets\Game\[1019] AssociatePacket.cs" />
+    <Compile Include="Packets\Game\[1027] SocketGemPacket.cs" />
+    <Compile Include="Packets\Game\[1033] ServerTime.cs" />
+    <Compile Include="Packets\Game\[1101] GroundItem.cs" />
+    <Compile Include="Packets\Game\[2032] NpcDialog.cs" />
+    <Compile Include="Packets\Game\[2031] Npc.cs" />
+    <Compile Include="Packets\Game\[2030] SpawnNpc.cs" />
+    <Compile Include="Packets\Game\[1005] Walk.cs" />
+    <Compile Include="Packets\Game\[1006]HeroInformation.cs" />
+    <Compile Include="Packets\Game\[1001] Register.cs" />
+    <Compile Include="Packets\Game\[1004]Talk.cs" />
+    <Compile Include="Packets\Game\[1008] ItemInformation.cs" />
+    <Compile Include="Packets\Game\[1009] ItemActionPacket.cs" />
+    <Compile Include="Packets\Game\[1010] GeneralData.cs" />
+    <Compile Include="Packets\Game\[1014] SpawnEntity.cs" />
+    <Compile Include="Packets\Game\[1017] UpdatePacket.cs" />
+    <Compile Include="Packets\Game\[1022] InteractPacket.cs" />
+    <Compile Include="Packets\Game\[1025] WeaponProficiency.cs" />
+    <Compile Include="Packets\Game\[1052] Connect.cs" />
+    <Compile Include="Packets\Game\[1110] MapStatus.cs" />
+    <Compile Include="Packets\Game\[1103] ConquerSkill.cs" />
+    <Compile Include="Packets\Game\[1105] SkillEffect.cs" />
+    <Compile Include="Packets\Login\[1052]Connect.cs" />
+    <Compile Include="Packets\Login\[1055]AuthResponsePacket.cs" />
+    <Compile Include="Packets\Login\[1056]PasswordSeed.cs" />
+    <Compile Include="Objects\LoginPlayer.cs" />
+    <Compile Include="Native.cs" />
+    <Compile Include="Packets\Login\[1086]Account.cs" />
+    <Compile Include="Packets\Login\[1100]MacAddress.cs" />
+    <Compile Include="Packets\PacketBuilder.cs" />
+    <Compile Include="Common.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Space\Calculations.cs" />
+    <Compile Include="Space\ILocatableObject.cs" />
+    <Compile Include="Space\Map.cs" />
+    <Compile Include="Space\Point.cs" />
+    <Compile Include="Space\Rectangle.cs" />
+    <Compile Include="Structures\ClientStatus.cs" />
+    <Compile Include="Structures\CombatStatistics.cs" />
+    <Compile Include="Structures\ConquerItem.cs" />
+    <Compile Include="Structures\ConquerProficiency.cs" />
+    <Compile Include="Structures\ConquerSkill.cs" />
+    <Compile Include="Objects\GroundItem.cs" />
+    <Compile Include="Structures\GuildAttr.cs" />
+    <Compile Include="Structures\Guild.cs" />
+    <Compile Include="Managers\Trade.cs" />
+    <Compile Include="Threading\CombatThread.cs" />
+    <Compile Include="Threading\MonsterThread.cs" />
+    <Compile Include="Threading\PacketThread.cs" />
+    <Compile Include="Threading\ThreadBase.cs" />
+    <Compile Include="Threading\WorldThread.cs" />
+    <Compile Include="Packets\NetStringPacker.cs" />
+    <Compile Include="Utility\ThreadSafeCounter.cs" />
+    <Compile Include="Utility\ThreadSafeRandom.cs" />
+    <Compile Include="Utility\Time.cs" />
+    <EmbeddedResource Include="ControlForm.resx">
+      <DependentUpon>ControlForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Database\Mappings\DbAccount.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Database\Mappings\DbCharacter.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Database\Mappings\DbItemInfo.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Database\Mappings\DbItemAddition.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Database\Mappings\DbItem.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Database\Mappings\DbSkill.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Database\Mappings\DbProficiency.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Database\Mappings\DbMagicType.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Managers\Attack\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Database\Mappings\DbPassage.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Database\Mappings\DbPortal.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Database\Mappings\DbMap.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Database\Mappings\DbNpc.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Database\Mappings\DbItemLog.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Database\Mappings\DbChatLog.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Database\Mappings\DbMonstertype.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Database\Mappings\DbSpawn.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Database\Mappings\DbStat.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Database\Mappings\DbDropRule.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Database\Mappings\DbShopItem.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Change Log.txt" />
+    <EmbeddedResource Include="Database\Mappings\DbNobility.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Database\Mappings\DbEvents.hbm.xml" />
+    <EmbeddedResource Include="Database\Mappings\DbSob.hbm.xml" />
+    <EmbeddedResource Include="Database\Mappings\DbGuildAttr.hbm.xml" />
+    <EmbeddedResource Include="Database\Mappings\DbGuild.hbm.xml" />
+    <EmbeddedResource Include="Database\Mappings\DbAssociate.hbm.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

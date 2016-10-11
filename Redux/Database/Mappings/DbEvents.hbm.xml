@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Redux"
+                   namespace="Redux.Database.Domain">
+
+  <class name="DbEvents" table="events">
+
+    <id name="ID" column="ID">
+      <generator class="identity" />
+    </id>
+    <property name="WinnerID" column="GuildWarWinner" />
+</class>
+
+</hibernate-mapping>

@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Redux"
+                   namespace="Redux.Database.Domain">
+
+  <class name="DbItemInfo" table="itemtype">
+    <id name="ID" column="ID">
+      <generator class="identity" />
+    </id>
+    <property name="Name" column="Name" />
+    <property name="ProfessionReq" column="ProfessionReq" />
+    <property name="ProficiencyReq" column="ProficiencyReq" />
+    <property name="LevelReq" column="LevelReq" />
+    <property name="GenderReq" column="GenderReq" />
+    <property name="StrengthReq" column="StrengthReq" />
+    <property name="AgilityReq" column="AgilityReq" />
+    <property name="VitalityReq" column="VitalityReq" />
+    <property name="SpiritReq" column="SpiritReq" />   
+    <property name="ItemFlags" column="ItemFlags" />
+    <property name="Weight" column="Weight" />
+    <property name="Price" column="Price" />
+    <property name="ActionID" column="ActionID" />
+    <property name="AttackMax" column="AttackMax" />
+    <property name="AttackMin" column="AttackMin" />
+    <property name="DefenseAdd" column="DefenseAdd" />
+    <property name="AccuracyAdd" column="AccuracyAdd" />
+    <property name="DodgeAdd" column="DodgeAdd" />
+    <property name="HealthAdd" column="HealthAdd" />
+    <property name="ManaAdd" column="ManaAdd" />
+    <property name="Amount" column="Amount" />
+    <property name="AmountMax" column="AmountMax" />
+    <property name="Ident" column="Ident" />
+    <property name="Gem1" column="Gem1" />
+    <property name="Gem2" column="Gem2" />    
+    <property name="Magic1" column="Magic1" />
+    <property name="Magic2" column="Magic2" />
+    <property name="Magic3" column="Magic3" />
+    <property name="MagicAttack" column="MagicAttack" />
+    <property name="MagicDefense" column="MagicDefense" />
+    <property name="AttackRange" column="AttackRange" />
+    <property name="AttackSpeed" column="AttackSpeed" />
+    <property name="FrayMode" column="FrayMode" />    
+    <property name="RepairMode" column="RepairMode" />
+    <property name="TypeMask" column="TypeMask" />
+    <property name="PriceCP" column="PriceCP" />
+    <property name="TypeDesc" column="TypeDesc" />
+  </class>
+
+</hibernate-mapping>

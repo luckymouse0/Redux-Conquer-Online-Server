@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Redux"
+                   namespace="Redux.Database.Domain">
+
+  <class name="DbGuildAttr" table="guildattr">
+
+    <id name="Id" column="id" />
+    <property name="GuildId" column="guild_id" />
+    <property name="Rank" column="rank" />
+    <property name="SilverDonation" column="donate_silver" />
+    <property name="JoinDate" column="join_date" />
+
+  </class>
+
+  <sql-query name="DeleteUserGuildAttr">
+    CALL DeleteUserGuildAttr(:userId,:guildId,:guildRank)
+  </sql-query>
+  
+  <sql-query name="DeleteGuildAttr">
+    CALL DeleteGuildAttr(:guildId)
+  </sql-query>
+
+</hibernate-mapping>

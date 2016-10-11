@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Redux"
+                   namespace="Redux.Database.Domain">
+
+  <class name="DbGuild" table="guild">
+
+    <id name="Id" column="id">
+      <generator class="identity" />
+    </id>
+    <property name="Name" column="name" />
+    <property name="Announce" column="announce" />
+    <property name="AnnounceDate" column="announce_date" />
+    <property name="LeaderId" column="leader_id" />
+    <property name="LeaderName" column="leader_name" />
+    <property name="Money" column="money" />
+    <property name="MasterGuildId" column="fealty_syn" />
+    <property name="DeleteFlag" column="del_flag" />
+    <property name="Amount" column="amount" />
+    <property name="Enemy0" column="enemy0" />
+    <property name="Enemy1" column="enemy1" />
+    <property name="Enemy2" column="enemy2" />
+    <property name="Enemy3" column="enemy3" />
+    <property name="Enemy4" column="enemy4" />
+    <property name="Ally0" column="ally0" />
+    <property name="Ally1" column="ally1" />
+    <property name="Ally2" column="ally2" />
+    <property name="Ally3" column="ally3" />
+    <property name="Ally4" column="ally4" />
+  </class>
+
+  <sql-query name="GetGuildMemberList">
+    CALL GetGuildMemberList(:guildId)
+  </sql-query>
+
+</hibernate-mapping>

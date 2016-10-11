@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Redux"
+                   namespace="Redux.Database.Domain">
+
+  <class name="DbMineDrop" table="MineDrop">
+    <id name="EntryID" column="EntryID">
+      <generator class="identity" />
+    </id>
+    <property name="MapID" column="MapID" />
+    <property name="Type" column="Type" />
+    <property name="Drop1" column="Drop1" />
+    <property name="Drop2" column="Drop2" />
+    <property name="Drop3" column="Drop3" />
+    <property name="Drop4" column="Drop4" />
+    <property name="Drop5" column="Drop5" />
+    <property name="Drop6" column="Drop6" />
+  </class>
+
+</hibernate-mapping>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Redux"
+                   namespace="Redux.Database.Domain">
+
+  <class name="DbTask" table="`Tasks`">
+    <id name="UID" column="`UID`">
+      <generator class="identity" />
+    </id>
+    <property name="Owner" column="`Owner`"/>
+    <property name="Type" column="`Type`"/>
+    <property name="Expires" column="`Expires`"/>
+    <property name="Count" column="`Count`"/>
+    <property name="Condition" column="`Condition`"/>
+  </class>
+
+</hibernate-mapping>

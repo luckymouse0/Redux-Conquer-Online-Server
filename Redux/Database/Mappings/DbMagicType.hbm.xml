@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Redux"
+                   namespace="Redux.Database.Domain">
+
+  <class name="DbMagicType" table="magictype">
+    <id name="UID" column="UID">
+      <generator class="identity" />
+    </id>
+    <property name="ID" column="ID"/>
+    <property name="Type" column="Type"/>
+    <property name="Name" column="Name"/>
+    <property name="Crime" column="Crime"/>
+    <property name="Ground" column="Ground"/>
+    <property name="Multi" column="Multi"/>
+    <property name="Target" column="Target"/>
+    <property name="Level" column="Level"/>
+    <property name="UseMP" column="UseMP"/>
+    <property name="Power" column="Power"/>
+    <property name="IntoneSpeed" column="IntoneSpeed"/>
+    <property name="Percent" column="Percent"/>
+    <property name="StepSecs" column="StepSecs"/>
+    <property name="Range" column="Range"/>
+    <property name="Distance" column="Distance"/>
+    <property name="Status" column="Status"/>
+    <property name="NeedProf" column="NeedProf"/>
+    <property name="NeedExp" column="NeedExp"/>
+    <property name="NeedLevel" column="NeedLevel"/>
+    <property name="UseXP" column="UseXP"/>
+    <property name="WeaponSubtype" column="WeaponSubtype"/>
+    <property name="ActiveTimes" column="ActiveTimes"/>
+    <property name="AutoActive" column="AutoActive"/>
+    <property name="FloorAttr" column="FloorAttr"/>
+    <property name="AutoLearn" column="AutoLearn"/>
+    <property name="LearnLevel" column="LearnLevel"/>
+    <property name="DropWeapon" column="DropWeapon"/>
+    <property name="UseStamina" column="UseStamina"/>
+    <property name="WeaponHit" column="WeaponHit"/>
+    <property name="UseItem" column="UseItem"/>
+    <property name="NextMagic" column="NextMagic"/>
+    <property name="DelayMS" column="DelayMS"/>
+    <property name="UseItemNum" column="UseItemNum"/>
+  </class>
+
+</hibernate-mapping>

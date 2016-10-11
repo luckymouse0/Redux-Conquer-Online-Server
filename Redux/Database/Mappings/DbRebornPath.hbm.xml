@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Redux"
+                   namespace="Redux.Database.Domain">
+
+  <class name="DbRebornPath" table="reborns">
+    <id name="UID" column="UID">
+      <generator class="assigned" />
+    </id>
+    <property name="RebornPath" column="RebornPath" />
+    <property name="IsForget" column="LearnType" />
+    <property name="SkillId" column="SkillId" /> 
+  </class>
+  
+  <sql-query name="GetReborn">
+    CALL GetReborn(:path)
+  </sql-query>
+</hibernate-mapping>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Redux"
+                   namespace="Redux.Database.Domain">
+
+  <class name="DbAccount" table="accounts">
+    <id name="UID" column="UID">
+      <generator class="identity" />
+    </id>
+    <property name="Username" column="Username" />
+    <property name="Password" column="Password" />
+    <property name="EMail" column="EMail" />  
+    <property name="EmailStatus" column="EmailStatus" />
+    <property name="Question" column="Question" />
+    <property name="Answer" column="Answer" />
+    <property name="Permission" column="Permission" />
+    <property name="Token" column="Token" />
+    <property name="Timestamp" column="Timestamp" />
+  </class>
+
+  <sql-query name="DeleteCharacter">
+    CALL DeleteCharacter(:_uid)
+  </sql-query>
+
+</hibernate-mapping>

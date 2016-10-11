@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Redux"
+                   namespace="Redux.Database.Domain">
+
+  <class name="DbStat" table="`stats`">
+    <id name="UID" column="`UID`">
+      <generator class="identity" />
+    </id>
+    <property name="ProfessionType" column="`ProfessionType`"/>
+    <property name="Level" column="`Level`"/>
+    <property name="Vitality" column="`Vitality`"/>
+    <property name="Strength" column="`Strength`"/>
+    <property name="Agility" column="`Agility`"/>    
+    <property name="Spirit" column="`Spirit`"/>
+  </class>
+
+</hibernate-mapping>

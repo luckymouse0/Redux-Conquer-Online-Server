@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Redux"
+                   namespace="Redux.Database.Domain">
+
+  <class name="DbLevExp" table="levexp">
+    <id name="Id" column="id">
+      <generator class="identity" />
+    </id>
+    <property name="Level" column="level" />
+    <property name="Experience" column="exp" />
+    <property name="UpLevTime" column="up_lev_time" />
+    <property name="Unknown" column="unknown" />
+  </class>
+
+</hibernate-mapping>

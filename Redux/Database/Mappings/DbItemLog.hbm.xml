@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Redux"
+                   namespace="Redux.Database.Domain">
+
+  <class name="DbItemLog" table="`items_log`">
+    <id name="LogUID" column="`LogUID`">
+      <generator class="identity" />
+    </id>
+    <property name="UniqueID" column="`UniqueID`"/>
+    <property name="Time" column="`Time`"/>
+    <property name="FormerOwner" column="`FormerOwner`"/>
+    <property name="NewOwner" column="`NewOwner`"/>
+    <property name="StaticID" column="`StaticID`"/>    
+    <property name="Durability" column="`Durability`"/>
+    <property name="Color" column="`Color`"/>
+    <property name="Plus" column="`Plus`" />
+    <property name="Bless" column="`Bless`"/>
+    <property name="Enchant" column="`Enchant`"/>
+    <property name="Gem1" column="`Gem1`"/>
+    <property name="Gem2" column="`Gem2`"/>   
+    <property name="Effect" column="`Effect`"/>
+  </class>
+
+</hibernate-mapping>

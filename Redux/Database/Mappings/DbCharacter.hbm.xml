@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Redux"
+                   namespace="Redux.Database.Domain">
+
+  <class name="DbCharacter" table="characters">
+    <id name="UID" column="UID">
+      <generator class="assigned" />
+    </id>
+    <property name="Name" column="Name" />
+    <property name="Spouse" column="Spouse"/>
+    <property name="Lookface" column="Lookface"/>
+    <property name="Hair" column="Hair"/>
+    <property name="Level" column="Level"/>
+    <property name="Money" column="Money"/>
+    <property name="WhMoney" column="WhMoney"/>
+    <property name="CP" column="CP"/>
+    <property name="Experience" column="Experience"/>
+    <property name="Strength" column="Strength"/>
+    <property name="Agility" column="Agility"/>
+    <property name="Spirit" column="Spirit"/>
+    <property name="Vitality" column="Vitality"/>
+    <property name="ExtraStats" column="ExtraStats"/>
+    <property name="Life" column="Life"/>
+    <property name="Mana" column="Mana"/>
+    <property name="Map" column="Map"/>
+    <property name="X" column="X"/>
+    <property name="Y" column="Y"/>
+    <property name="Pk" column="Pk"/>
+    <property name="Profession" column="Profession"/>
+    <property name="Profession1" column="Profession1"/>
+    <property name="Profession2" column="Profession2"/>
+    <property name="Profession3" column="Profession3"/>
+    <property name="QuizPoints" column="QuizPoints"/>
+    <property name="VirtuePoints" column="VirtuePoints"/>
+    <property name="Online" column="Online"/>
+    <property name="HeavenBlessExpires" column="HeavenBlessExpires"/>
+    <property name="DoubleExpExpires" column="DoubleExpExpires"/>
+    <property name="TrainingTime" column="TrainingTime"/>
+    <property name="OfflineTGEntered" column="OfflineTGEntered"/>
+    <property name="LuckyTimeRemaining" column="LuckyTimeRemaining"/>
+  </class>
+
+</hibernate-mapping>

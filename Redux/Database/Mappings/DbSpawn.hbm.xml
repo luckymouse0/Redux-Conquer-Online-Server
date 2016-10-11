@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Redux"
+                   namespace="Redux.Database.Domain">
+
+  <class name="DbSpawn" table="spawns">
+    <id name="UID" column="UID">
+      <generator class="identity" />
+    </id>
+    <property name="Map" column="Map" />
+    <property name="X1" column="X1" />
+    <property name="Y1" column="Y1" />  
+    <property name="X2" column="X2" />
+    <property name="Y2" column="Y2" />
+    <property name="MonsterType" column="MonsterType" />
+    <property name="AmountPer" column="AmountPer" />
+    <property name="AmountMax" column="AmountMax" />
+    <property name="Frequency" column="Frequency" />
+  </class>
+
+</hibernate-mapping>

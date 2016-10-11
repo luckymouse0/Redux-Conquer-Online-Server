@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Redux"
+                   namespace="Redux.Database.Domain">
+
+  <class name="DbMonstertype" table="monstertype">
+    <id name="ID" column="ID">
+      <generator class="assigned" />
+    </id>
+    <property name="Name" column="Name" />
+    <property name="Mesh" column="Mesh"/>
+    <property name="Life" column="Life"/>
+    <property name="AttackMax" column="AttackMax"/>
+    <property name="AttackMin" column="AttackMin"/>
+    <property name="AttackRange" column="AttackRange"/>
+    <property name="ViewRange" column="ViewRange"/>
+    <property name="Accuracy" column="Accuracy"/>
+    <property name="Defence" column="Defence"/>
+    <property name="Dodge" column="Dodge"/>
+    <property name="SkillType" column="SkillType"/>
+    <property name="SkillAccuracy" column="SkillAccuracy"/>
+    <property name="MagicDefence" column="MagicDefence"/>
+    <property name="AttackSpeed" column="AttackSpeed"/>
+    <property name="MoveSpeed" column="MoveSpeed"/>
+    <property name="Level" column="Level"/>
+    <property name="AttackMode" column="AttackMode"/>
+    <property name="AIType" column="AIType"/>
+    <property name="SizeAdd" column="SizeAdd"/>
+    <property name="DropHelmet" column="DropHelmet"/>
+    <property name="DropNecklace" column="DropNecklace"/>
+    <property name="DropArmor" column="DropArmor"/>
+    <property name="DropRing" column="DropRing"/>
+    <property name="DropWeapon" column="DropWeapon"/>
+    <property name="DropShield" column="DropShield"/>
+    <property name="DropBoots" column="DropBoots"/>
+    <property name="DropHP" column="DropHP"/>
+    <property name="DropMP" column="DropMP"/>
+    <property name="BonusExp" column="BonusExp"/>
+    
+  </class>
+
+</hibernate-mapping>

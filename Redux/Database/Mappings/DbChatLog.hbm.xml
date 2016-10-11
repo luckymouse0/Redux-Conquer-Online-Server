@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Redux"
+                   namespace="Redux.Database.Domain">
+
+  <class name="DbChatLog" table="`chat_log`">
+    <id name="UID" column="`UID`">
+      <generator class="identity" />
+    </id>
+    <property name="Time" column="`Time`"/>
+    <property name="Type" column="`Type`"/>
+    <property name="From" column="`From`"/>
+    <property name="To" column="`To`"/>    
+    <property name="Message" column="`Message`"/>
+  </class>
+
+</hibernate-mapping>

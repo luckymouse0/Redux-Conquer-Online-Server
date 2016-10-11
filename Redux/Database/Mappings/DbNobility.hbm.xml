@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Redux"
+                   namespace="Redux.Database.Domain">
+
+  <class name="DbNobility" table="nobility">
+    <id name="UID" column="UID">
+      <generator class="assigned" />
+    </id>
+    <property name="Donation" column="Donation" />
+  </class>
+
+  <sql-query name="GetNobilityRank">
+    CALL GetNobilityRank(:donationvalue)
+  </sql-query>
+
+  <sql-query name="NobilityPages">
+    CALL NobilityPages()
+  </sql-query>
+
+</hibernate-mapping>
