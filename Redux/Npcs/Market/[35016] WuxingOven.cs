@@ -29,14 +29,14 @@ namespace Redux.Npcs
                 case 0:
                     AddText("A good set of equipment can help you a lot in future battles.Is there something I can do for you?");
                     AddOption("Enchant HP to my gears.", 1);
-                    AddOption("Composing Upgrade.", 2);
+                    //AddOption("Composing Upgrade.", 2);
                     AddOption("Nothing right now, thanks.", 255);
 
                     break;
                 case 1:
                     _client.Send(GeneralActionPacket.Create(_client.UID, Enum.DataAction.OpenCustom, 1091));
                     break;
-                case 2:
+                /*case 2:
                     AddText("There are two ways of composing from +1 to +9 with +n stones or +n items and from +9 to +12 with DragonBalls.");
                     AddText("Whitch one would you want?");
                     AddOption("Compose +1 to +9.", 3);
@@ -205,7 +205,7 @@ namespace Redux.Npcs
                         AddOption("Nevermind", 255);
                         break;
                     }
-                #endregion
+                #endregion*/
 
             }
             AddFinish();

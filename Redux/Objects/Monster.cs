@@ -21,6 +21,9 @@ namespace Redux.Game_Server
         public MonsterMode Mode { get; private set; }
         public byte Direction { get { return SpawnPacket.Direction; } set { SpawnPacket.Direction = value; } }
         public long DiedAt = 0, LastMove = 0, LastAttack = 0;
+        
+        private uint isAttacked;  //This will help monster to search targets.
+
         public override void SetDisguise(Database.Domain.DbMonstertype _mob, long _duration) { }
         public Monster(DbMonstertype _type, SpawnManager _owner, Entity playerOwner = null)
             : base()
@@ -33,6 +36,9 @@ namespace Redux.Game_Server
             CombatStats = Structures.CombatStatistics.Create(BaseMonster);
             CombatEngine = new CombatManager(this);
             SpawnPacket = SpawnEntityPacket.Create(this);
+
+
+            isAttacked = BaseMonster.Life;    //Added so monsters search when attacked.
         }
 
         public Monster(DbMonstertype _type)
@@ -205,12 +211,12 @@ namespace Redux.Game_Server
             #endregion
 
             #region Drop Gear
-            while (Common.PercentSuccess(20) && dropCount < 4)
+            while (Common.PercentSuccess(Constants.CHANCE_DROP_GEAR) && dropCount < 4)
                 DropItemByID(DropManager.GenerateDropID(BaseMonster.Level), _killer);
             #endregion
 
             #region Drop Money
-            while (Common.PercentSuccess(20) && dropCount < 4)
+            while (Common.PercentSuccess(Constants.CHANCE_DROP_GOLD) && dropCount < 4)
             {
                 uint value = (uint)Common.Random.Next(BaseMonster.Level, (int)(BaseMonster.Level * 15 * Constants.GOLD_RATE));
                 uint itemID = 1090000;
@@ -230,12 +236,25 @@ namespace Redux.Game_Server
             while (Common.PercentSuccess(Constants.CHANCE_POTION) && dropCount < 4)
             {
                 var itemID = BaseMonster.DropHP;
-                if (Common.Random.Next(100) > 60)
+                if (Common.Random.Next(100) > 50)
                     itemID = BaseMonster.DropMP;
                 DropItemByID(itemID, _killer);
                 dropCount++;
             }
             #endregion
+
+            #region Drop CP
+            if (Common.PercentSuccess(Constants.CHANCE_CP))
+            {
+                var killer = Map.Search<Player>(_killer);
+                if (killer != null)
+                {
+                    killer.CP += (uint)(Math.Floor((double)(BaseMonster.Level / 13)));
+                    killer.SendMessage("You've received a bonus " + (Math.Floor((double)(BaseMonster.Level / 13))) + " cp for killing a(n) " + BaseMonster.Name + "!", ChatType.System);
+                }
+            }            
+            #endregion
+
         }
 
         private void DropItemByID(uint _id, uint _killer, CurrencyType _currency = CurrencyType.None, uint _value = 0)
@@ -255,6 +274,20 @@ namespace Redux.Game_Server
                         coItem.Color = 3;
                     if (Common.PercentSuccess(Constants.CHANCE_PLUS))
                         coItem.Plus = 1;
+
+                    if(coItem.IsWeapon)
+                    {
+                        if (Common.PercentSuccess(Constants.SOCKET_DROP))
+                        {
+                            coItem.Gem1 = 255;
+
+                            if (Common.PercentSuccess(Constants.SOCKET_DROP))
+                            {
+                                coItem.Gem2 = 255;
+                            }
+                        }
+                    }
+
                     var groundItem = new GroundItem(coItem, coItem.UniqueID, loc, Map, _killer, _currency, _value);
                     groundItem.AddToMap();
                 }
@@ -296,6 +329,7 @@ namespace Redux.Game_Server
 
                         break;
                     }
+
                 case MonsterMode.Idle:
                     {
                         var d1 = BaseMonster.ViewRange;
@@ -312,36 +346,77 @@ namespace Redux.Game_Server
                                     break;
                             }
                         }
+
                         var Target = Map.Search<Entity>(TargetID);
-                        if (Target != null)
-                        {
-                            var dist = Calculations.GetDistance(Location, Target.Location);
-                            if (dist < BaseMonster.AttackRange)
-                                Mode = MonsterMode.Attack;
-                            else if (dist < BaseMonster.ViewRange)
-                                Mode = MonsterMode.Walk;
-                        }
 
-                        else if (BaseMonster.Mesh != 900 && Common.Clock - LastMove > BaseMonster.MoveSpeed * 4)
+                        /*if ((Life < MaximumLife) && (isSearching == false))    //Get the target that is range attacking
                         {
-                            var dir = (byte)Common.Random.Next(9);
-                            Point tryMove = new Point(Location.X + Common.DeltaX[dir], Location.Y + Common.DeltaY[dir]);
-                            if (Common.MapService.Valid(MapID, (ushort)tryMove.X, (ushort)tryMove.Y) && !Common.MapService.HasFlag(MapID, (ushort)tryMove.X, (ushort)tryMove.Y, TinyMap.TileFlag.Monster))
+                            var searchRange = 30;
+                            foreach (var t in Map.QueryScreen<Entity>(this))
                             {
-                                //Send to screen new walk packet
-                                SendToScreen(WalkPacket.Create(UID, dir));
-                                Common.MapService.RemoveFlag(MapID, X, Y, TinyMap.TileFlag.Monster);
-                                X = (ushort)tryMove.X;
-                                Y = (ushort)tryMove.Y;
-                                Direction = dir;
-                                Common.MapService.AddFlag(MapID, X, Y, TinyMap.TileFlag.Monster);
-                                LastMove = Common.Clock;
-                                UpdateSurroundings();
+                                if (!CombatEngine.IsValidTarget(t) || (BaseMonster.Mesh != 900 && t.HasEffect(ClientEffect.Fly)) || t.HasStatus(ClientStatus.ReviveProtection))
+                                    continue;
+                                var d2 = Calculations.GetDistance(Location, t.Location);
+                                if (d2 < searchRange)
+                                {
+                                    searchRange = d2;
+                                    TargetID = t.UID;
+                                }
+                            }
+                            Target = Map.Search<Entity>(TargetID);
+                            Mode = MonsterMode.Search;
+                        }*/
 
+
+                        if (Life < isAttacked)
+                        {
+                            Mode = MonsterMode.Search;
+                            isAttacked = Life;
+
+                            foreach (var t in Map.QueryScreen<Entity>(this))
+                            {
+                                if (!CombatEngine.IsValidTarget(t) || (BaseMonster.Mesh != 900 && t.HasEffect(ClientEffect.Fly)) || t.HasStatus(ClientStatus.ReviveProtection))
+                                    continue;
+                                var d2 = Calculations.GetDistance(Location, t.Location);
+                                if (d2 < 30)   //Range of searching
+                                {
+                                    TargetID = t.UID;
+                                    if (d2 <= BaseMonster.AttackRange)
+                                        break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (Target != null)
+                            {
+                                var dist = Calculations.GetDistance(Location, Target.Location);
+                                if (dist < BaseMonster.AttackRange)
+                                    Mode = MonsterMode.Attack;
+                                else if (dist < BaseMonster.ViewRange)
+                                    Mode = MonsterMode.Walk;
+                            }
+                            else if (BaseMonster.Mesh != 900 && Common.Clock - LastMove > BaseMonster.MoveSpeed * 4)
+                            {
+                                var dir = (byte)Common.Random.Next(9);
+                                Point tryMove = new Point(Location.X + Common.DeltaX[dir], Location.Y + Common.DeltaY[dir]);
+                                if (Common.MapService.Valid(MapID, (ushort)tryMove.X, (ushort)tryMove.Y) && !Common.MapService.HasFlag(MapID, (ushort)tryMove.X, (ushort)tryMove.Y, TinyMap.TileFlag.Monster))
+                                {
+                                    //Send to screen new walk packet
+                                    SendToScreen(WalkPacket.Create(UID, dir));
+                                    Common.MapService.RemoveFlag(MapID, X, Y, TinyMap.TileFlag.Monster);
+                                    X = (ushort)tryMove.X;
+                                    Y = (ushort)tryMove.Y;
+                                    Direction = dir;
+                                    Common.MapService.AddFlag(MapID, X, Y, TinyMap.TileFlag.Monster);
+                                    LastMove = Common.Clock;
+                                    UpdateSurroundings();
+                                }
                             }
                         }
                         break;
                     }
+
                 case MonsterMode.Walk:
                     {
                         var target = Map.Search<Entity>(TargetID);
@@ -368,7 +443,7 @@ namespace Redux.Game_Server
                                     LastMove = Common.Clock;
                                 }
                                 else if (Common.Clock - LastMove > BaseMonster.MoveSpeed * 5)
-                                    Mode = MonsterMode.Idle;
+                                    Mode = MonsterMode.Encircle;
                             }
                             else
                             {
@@ -376,6 +451,75 @@ namespace Redux.Game_Server
                                 Mode = MonsterMode.Attack;
                             }
                         }
+                        break;
+                    }
+
+                case MonsterMode.Encircle:
+                    {
+                        var Target = Map.Search<Entity>(TargetID);
+                        if (Target != null)
+                        {
+                            var dir = (byte)Common.Random.Next(9);   //This should move to turn around an object. Now is random.
+
+                            for (int i = 0; i < Common.Random.Next(2, 5); i++)
+                            {
+                                Point tryMove = new Point(Location.X + Common.DeltaX[dir], Location.Y + Common.DeltaY[dir]);
+                                if (Common.MapService.Valid(MapID, (ushort)tryMove.X, (ushort)tryMove.Y) && !Common.MapService.HasFlag(MapID, (ushort)tryMove.X, (ushort)tryMove.Y, TinyMap.TileFlag.Monster))
+                                {
+                                    //Send to screen new walk packet
+                                    SendToScreen(WalkPacket.Create(UID, dir));
+                                    Common.MapService.RemoveFlag(MapID, X, Y, TinyMap.TileFlag.Monster);
+                                    X = (ushort)tryMove.X;
+                                    Y = (ushort)tryMove.Y;
+                                    Direction = dir;
+                                    Common.MapService.AddFlag(MapID, X, Y, TinyMap.TileFlag.Monster);
+                                    LastMove = Common.Clock;
+                                    //UpdateSurroundings();
+                                }
+                            }
+                        }
+
+                        Mode = MonsterMode.Idle;
+
+                        break;
+                    }
+
+                case MonsterMode.Search:
+                    {
+                        var target = Map.Search<Entity>(TargetID);
+                        
+                        if (target == null || !target.Alive || (BaseMonster.Mesh != 900 && target.HasEffect(ClientEffect.Fly) || target.HasStatus(ClientStatus.ReviveProtection)))
+                            Mode = MonsterMode.Idle;
+                        else if (Common.Clock - LastMove > BaseMonster.MoveSpeed)
+                        {
+                            var dist = Calculations.GetDistance(Location, target.Location);
+                            if (dist > 30)                   //Max range of search.
+                                Mode = MonsterMode.Idle;
+                            else if (dist > BaseMonster.AttackRange)
+                            {
+                                var dir = Calculations.GetDirection(Location, target.Location);
+                                Point tryMove = new Point(Location.X + Common.DeltaX[dir], Location.Y + Common.DeltaY[dir]);
+                                if (Common.MapService.Valid(MapID, (ushort)tryMove.X, (ushort)tryMove.Y) && !Common.MapService.HasFlag(MapID, (ushort)tryMove.X, (ushort)tryMove.Y, TinyMap.TileFlag.Monster))
+                                {
+                                    //Send to screen new walk packet
+                                    SendToScreen(WalkPacket.Create(UID, dir));
+                                    Common.MapService.RemoveFlag(MapID, X, Y, TinyMap.TileFlag.Monster);
+                                    X = (ushort)tryMove.X;
+                                    Y = (ushort)tryMove.Y;
+                                    Direction = dir;
+                                    Common.MapService.AddFlag(MapID, X, Y, TinyMap.TileFlag.Monster);
+                                    LastMove = Common.Clock;
+                                }
+                                else if (Common.Clock - LastMove > BaseMonster.MoveSpeed * 5)
+                                    Mode = MonsterMode.Encircle;
+                            }
+                            else
+                            {
+                                LastAttack = Common.Clock - AttackSpeed + 100;
+                                Mode = MonsterMode.Attack;
+                            }
+                        }
+
                         break;
                     }
             }

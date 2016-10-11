@@ -266,6 +266,9 @@ namespace Redux.Managers
                 case SkillSort.CallPet:
                     LaunchSummonSkill();
                     break;
+                case SkillSort.DecLife:
+                    LaunchDecLifeSkill();
+                    break;
                 default:
                     Console.WriteLine("Cannot launch unhandled skill type {0} from {1}", skill.Type, owner.Name);
                     break;
@@ -275,6 +278,12 @@ namespace Redux.Managers
             if (packet.Data > 0)
                 owner.SendToScreen(packet, true);         
             DealSkill();
+
+            //Auto Cast Passive skill!
+            if (owner is Player)
+            {
+                LaunchWeaponSkill();
+            }
         }
 
         #region Launch Skill By Type
@@ -317,7 +326,6 @@ namespace Redux.Managers
         #region Launch Heal Target Skill
         private void LaunchHealTargetSkill()
         {
-
             Entity target = owner;
             if (skill.Target == TargetType.BuffPlayer)
                 target = owner.Map.Search<Entity>(targetUID);
@@ -554,8 +562,163 @@ namespace Redux.Managers
 
         }
         #endregion
+        
+        #region Launch Decrease Life Skill
+        private void LaunchDecLifeSkill()
+        {
+            var target = owner.Map.Search<Entity>(targetUID);
+            this.target = target;
+            if (!IsInSkillRange(target, skill) || !IsValidTarget(target))
+                AbortAttack();
+            else
+            {
+                packet.Data = targetUID;
+                uint dmg = (uint)Math.Floor((double)target.Life * ((double)1 / (double)skill.Power));
+                packet.AddTarget(target.UID, dmg);
+                if (owner is Player)
+                {
+                    var expGain = owner.CalculateExperienceGain(target, dmg);
+                    ((Player)owner).GainExperience(expGain);
+                    AddSkillExperience(skill.ID, 1);
+                }
+                else if (owner is Pet)
+                {
+                    if (((Pet)owner).PetOwner != null)
+                    {
+                        var expGain = owner.CalculateExperienceGain(target, dmg);
+                        ((Pet)owner).PetOwner.GainExperience(expGain);
+                    }
+                }
+                target.ReceiveDamage(dmg, owner.UID);
+            }
+        }
+        #endregion
 
         #endregion
+        #endregion
+
+        #region Launch Weapon Skill
+        private void LaunchWeaponSkill()
+        {
+            //Weapons Effects and Offensive Passive Skills
+            ConquerItem coWeaponL;
+
+            try
+            {
+                coWeaponL = owner.Equipment.GetItemBySlot(ItemLocation.WeaponL);
+            }
+            catch
+            {
+                coWeaponL = null;
+            }
+            var coWeaponR = owner.Equipment.GetItemBySlot(ItemLocation.WeaponR);
+
+
+            if ((coWeaponR.Effect == (byte)ItemEffects.Poison) || ((coWeaponL != null) && (coWeaponL.Effect == (byte)ItemEffects.Poison)))  //Poison Effect
+            {
+                DbMagicType passiveSkill = ServerDatabase.Context.MagicType.GetById((uint)SkillID.Poison);
+                LaunchStatusAttackPassiveSkill(passiveSkill);
+            }
+            else if (coWeaponR.Effect == (byte)ItemEffects.Heal)   //Heal Effect
+            {
+                DbMagicType passiveSkill = ServerDatabase.Context.MagicType.GetById((uint)SkillID.HealBacksword);
+
+                //Call heal passive skill
+                packet = SkillEffectPacket.Create(owner.UID, 0, passiveSkill.ID, passiveSkill.Level);
+                LaunchHealPassiveSkill(passiveSkill);
+
+                if (packet.Data > 0)
+                    owner.SendToScreen(packet, true);
+
+            }
+            else if (coWeaponR.Effect == (byte)ItemEffects.Mana)
+            {
+                DbMagicType passiveSkill = ServerDatabase.Context.MagicType.GetById((uint)SkillID.ManaBacksword);
+
+                //Call add mana passive skill
+                packet = SkillEffectPacket.Create(owner.UID, 0, passiveSkill.ID, passiveSkill.Level);
+                LaunchAddManaPassiveSkill(passiveSkill);
+
+                if (packet.Data > 0)
+                    owner.SendToScreen(packet, true);
+
+            }
+        }
+
+        #region Launch Passive Skill By Type
+
+        #region Launch Heal Passive Skill
+        private void LaunchHealPassiveSkill(DbMagicType passiveSkill)
+        {
+            if (Common.PercentSuccess(passiveSkill.Percent))
+            {
+                packet.Data = owner.UID;
+                packet.AddTarget(owner.UID, (uint)passiveSkill.Power);
+                owner.Life += (uint)passiveSkill.Power;
+            }
+        }        
+        #endregion
+
+        #region Launch Add Mana Passive Skill
+        private void LaunchAddManaPassiveSkill(DbMagicType passiveSkill)
+        {
+            if (Common.PercentSuccess(passiveSkill.Percent))
+            {
+                packet.Data = owner.UID;
+                packet.AddTarget(owner.UID, (uint)passiveSkill.Power);
+                owner.Mana += (ushort)passiveSkill.Power;
+            }
+        }
+        #endregion
+
+        #region Launch Status Attack Passive Skill
+        private void LaunchStatusAttackPassiveSkill(DbMagicType passiveSkill)
+        {
+            var target = owner.Map.Search<Entity>(targetUID);
+            this.target = target;
+
+            if (target == null)
+            { AbortAttack(); return; }
+
+            if ((skill == null) || (skill.Type == SkillSort.Attack))
+            {
+                if (Common.PercentSuccess(passiveSkill.Percent))
+                {
+                    switch (passiveSkill.Status)
+                    {
+                        case (int)ItemEffects.Poison:
+                            target.AddEffect(ClientEffect.Poison, Common.Random.Next(2000, 4000)); //random 2-4 sec poison duration
+                            break;
+                    }
+                }
+            }
+        }
+        
+        #endregion
+
+        #endregion
+        #endregion
+
+        #region Launch Defensive Passive Skills
+        private void LaunchDefensivePassiveSkill(uint dmg)
+        {
+            //Defensive Passive Skills
+            if ((target as Player).CombatManager.KnowsSkill(SkillID.Reflect) == true)     //Reflect Skill
+            {
+                DbMagicType passiveSkill = ServerDatabase.Context.MagicType.GetById((uint)SkillID.Reflect);
+                if (Common.PercentSuccess(passiveSkill.Percent))
+                {
+                    uint reflectDmg = Math.Min(dmg, (uint)passiveSkill.Power);           //Reflect have a cap based on Power, default = 1700
+                    target.SendToScreen(InteractPacket.Create(target.UID, owner.UID, (ushort)target.Location.X, (ushort)target.Location.Y, InteractAction.ReflectMagic, reflectDmg), true);
+                    owner.ReceiveDamage(reflectDmg, target.UID);
+
+                    if (!owner.Alive)    //Reflect kill attacker.
+                    {
+                        owner.Kill(1, target.UID);
+                    }
+                }
+            }
+        }
         #endregion
 
         #region Deal Skill
@@ -763,6 +926,19 @@ namespace Redux.Managers
                 }
                 target.ReceiveDamage(dmg, owner.UID);
 
+                //Defensive Passive Skills
+                if (target is Player)
+                {
+                    LaunchDefensivePassiveSkill(dmg);
+                }
+
+                //Offensive Passive Skills
+                if (owner is Player)
+                {
+                    LaunchWeaponSkill();
+                }
+                
+
                 if (!target.Alive)
                 {
                     if (target is SOB)
@@ -794,7 +970,7 @@ namespace Redux.Managers
                     owner.SendToScreen(InteractPacket.Create(owner.UID, target.UID, (ushort)target.Location.X, (ushort)target.Location.Y, (owner.WeaponType == 500 ? InteractAction.Shoot : InteractAction.Attack), dmg), true);
             }
             catch(Exception p)
-            { AbortAttack(); }
+            { AbortAttack(); Console.WriteLine(p); }
 
         }
         #endregion

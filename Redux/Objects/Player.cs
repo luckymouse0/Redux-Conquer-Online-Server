@@ -67,7 +67,9 @@ namespace Redux.Game_Server
             LastPkPoint = Common.Clock,
             NextMine = Common.Clock, 
             LastStep = Common.Clock,
-            LastCool = Common.Clock;
+            LastCool = Common.Clock,
+            LastRecover = Common.Clock; //Agregado para curarse al senterse
+
         private ushort transformation, face, body = 0;
         private byte stamina;
         private byte xp = 0;
@@ -299,7 +301,7 @@ namespace Redux.Game_Server
         public ushort ExtraStats { get { return Character.ExtraStats; } set { Character.ExtraStats = value; Send(UpdatePacket.Create(UID, UpdateType.AdditionalPoint, Character.ExtraStats)); } }
         public byte Direction { get; set; }
         public ActionType Action { get { return SpawnPacket.Action; } set { SpawnPacket.Action = value; } }
-        public byte RebornCount { get; set; }
+        public byte RebornCount { get; set; }        
         public short PK { get { return Character.Pk; } set { Character.Pk = value; } }
         #endregion
 
@@ -761,6 +763,7 @@ namespace Redux.Game_Server
                     }
                 }
             }
+
             UID = Character.UID;
 
             face = (ushort)(Character.Lookface / 10000);
@@ -1014,6 +1017,20 @@ namespace Redux.Game_Server
             { Disconnect(); Console.WriteLine("Connection timeout for {0} with {1} ms latency", Name, Common.Clock - LastPingReceived); return; }
             if (Alive)
             {
+                //Recuperar HP al sentarse
+                if ((Action == ActionType.Sit) && (Common.Clock - LastRecover > Common.MS_PER_SECOND * 10) && (Life < MaximumLife))
+                {
+                    if (Common.Clock - LastSitAt > Common.MS_PER_SECOND * 10)
+                    {
+                        uint toGain = ((10 * MaximumLife) / 100);
+
+                        Life = Math.Min(Life + toGain, MaximumLife);
+
+                        LastRecover = Common.Clock;
+                    }
+                }
+                //
+
                 if ((Character.HeavenBlessExpires > DateTime.Now && stamina < 150) || stamina < 100)
                 {
                     byte toGain = 3;
@@ -1021,6 +1038,7 @@ namespace Redux.Game_Server
                         toGain = 11;
                     Stamina = (byte)Math.Min((Character.HeavenBlessExpires > DateTime.Now) ? 150 : 100, stamina + toGain);
                 }
+
                 if (!HasEffect(ClientEffect.XpStart) && Common.Clock - LastXpUp > Common.MS_PER_SECOND * 3)
                 {
                     Xp = (byte)(Math.Min(100, Xp + 1));
@@ -1028,6 +1046,7 @@ namespace Redux.Game_Server
                         AddEffect(ClientEffect.XpStart, 20000);
                     LastXpUp = Common.Clock;
                 }
+
                 if (PK > 0 && Common.Clock - LastPkPoint > Common.MS_PER_MINUTE * 6)//If last Pk point has been 6 minutes
                 {
                     PK -= 1;//Minus 1 PK point

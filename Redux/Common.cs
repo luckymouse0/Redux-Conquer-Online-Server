@@ -185,10 +185,10 @@ namespace Redux
         {
             return Random.NextDouble() * 100 < _chance;
         }
-        public static bool PercentSuccess(int _chance)
+        /*public static bool PercentSuccess(int _chance)
         {
             return Random.NextDouble() * 100 < _chance;
-        }
+        }*/
         #endregion
 
     }

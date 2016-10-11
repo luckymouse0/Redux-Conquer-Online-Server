@@ -24,7 +24,7 @@ namespace Redux.Npcs
 
         public override void Run(Game_Server.Player _client, ushort _linkback)
         {
-            Responses = new List<NpcDialogPacket>();
+            /*Responses = new List<NpcDialogPacket>();
             AddAvatar();
             switch (_linkback)
             {
@@ -127,7 +127,7 @@ namespace Redux.Npcs
                                     _client.DeleteItem(Constants.DRAGONBALL_ID);
                                 equipment.ChangeItemID(equipment.GetNextItemQuality());
 
-                                if (Common.PercentSuccess(Constants.SOCKET_RATE * 2))
+                                if (Common.PercentSuccess(Constants.SOCKET_UPGRADE * Constants.SOCKET_UPGRADE))
                                 {
                                     if (equipment.Gem1 == 0)
                                     {
@@ -219,7 +219,7 @@ namespace Redux.Npcs
                                 for (var i = 0; i < metCost; i++)
                                     _client.DeleteItem(Constants.METEOR_ID);
                                 equipment.ChangeItemID(equipment.GetNextItemLevel());
-                                if (Common.PercentSuccess(Constants.SOCKET_RATE))
+                                if (Common.PercentSuccess(Constants.SOCKET_UPGRADE))
                                 {
                                     if (equipment.Gem1 == 0)
                                     {
@@ -244,7 +244,7 @@ namespace Redux.Npcs
             }
             AddFinish();
             Send();
-
+            */
         }
     }
 }

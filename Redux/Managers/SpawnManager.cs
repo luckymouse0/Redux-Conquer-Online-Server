@@ -8,6 +8,7 @@ using Redux.Space;
 using Redux.Database;
 using Redux.Game_Server;
 using Redux.Database.Domain;
+using Redux.Packets.Game;
 
 namespace Redux.Managers
 {
@@ -85,9 +86,10 @@ namespace Redux.Managers
             if (AliveMembers.Count > 0 && IsActive)
                 foreach (var member in AliveMembers.Values)
                     if (member.Alive && member.IsActive)
+                    {
                         member.Monster_Timer();
-
-
+                        member.On_Entity_Timer();          //Added so effects/status on monsters can have a timer!
+                    }
         }
     }
 }

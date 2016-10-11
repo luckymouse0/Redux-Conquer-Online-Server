@@ -120,11 +120,6 @@ namespace Redux.Npcs
                             if (client.Level >= 40 && client.Agility >= 25 && client.Vitality >= 22 && client.Spirit >= 80)
                             {
                                 AddText("You have been promoted!");
-                                if (client.RebornCount == 1)
-                                {
-                                    AddText("I've given you a special item to help commemorate the occasion!");
-                                    client.CreateItem(410077);//poison blade - need to add stat
-                                }
                                 if (isFire)
                                     client.Character.Profession = 142;
                                 else

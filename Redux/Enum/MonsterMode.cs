@@ -15,6 +15,8 @@ namespace Redux.Enum
         Follow,
         Escape,
         Forward,
+        Encircle, //Turn around when monster can't walk.
+        Search, //When Target is a range attacker.
         Attack
     }
 

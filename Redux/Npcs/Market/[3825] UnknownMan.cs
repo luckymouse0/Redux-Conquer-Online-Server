@@ -33,12 +33,12 @@ namespace Redux.Npcs
                         AddText("I need some time to recover. Come see me tomorrow");
                         AddOption("I shall", 255);
                     }
-                    else if (_client.HasItem(722185))
+                    /*else if (_client.HasItem(722185))
                     {
                         AddText("Is that wine for me? I'm so very thirsty!");
                         AddOption("Here you go.", 2);
                         AddOption("No! Get away from me", 255);
-                    }
+                    }*/
                     else
                     {
                         AddText("Hey, you there! Please take pity on a homeless old man! I am so hungry but can`t even afford a bowl of noodles. Could you help ");

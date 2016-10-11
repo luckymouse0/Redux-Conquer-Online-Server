@@ -61,6 +61,7 @@ namespace Redux.Npcs
                         if (_client.TryGetEquipmentByLocation(ItemLocation.Armor, out equipment) && equipment.EquipmentSort == 3)
                         {
                             AddText("What color would you like?");
+                            AddOption("Black", 32);
                             AddOption("White", 33);
                             AddOption("Blue", 34);
                             AddOption("Red", 35);
@@ -118,6 +119,7 @@ namespace Redux.Npcs
                         break;
                     }
 
+                case 32:
                 case 33:
                 case 34:
                 case 35:

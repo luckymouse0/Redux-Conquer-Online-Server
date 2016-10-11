@@ -68,7 +68,7 @@ namespace Redux.Managers
                     break;
             }
 
-            var quality = Common.Random.Next(3,6);//rolls 3, 4 or 5
+            var quality = Common.Random.Next(3,6);//rolls 3, 4 or 5 for normal quality
 
             if (Common.PercentSuccess(Constants.CHANCE_SUPER))
                 quality = QUALITY_SUPER;
@@ -80,6 +80,52 @@ namespace Redux.Managers
                 quality = QUALITY_REFINED;
 
             return (uint)((itemType * 1000) + (itemLevel * 10) + quality);          
+        }
+
+        public static uint GenerateDropID(byte _level, ushort quality)
+        {
+            if (_level > 125)
+                _level = 125;
+            ushort itemLevel = 0;
+            var dropType = Common.Random.Next(8);
+            var itemType = 160;
+            switch (dropType)
+            {
+                case 0:
+                    itemType = HelmetTypes[Common.Random.Next(HelmetTypes.Length)];
+                    itemLevel = (ushort)Common.Random.Next(_level / 20, Math.Min(MaxHelmetLevel, _level / 11 + 1));
+                    break;
+                case 1:
+                    itemType = NecklaceTypes[Common.Random.Next(NecklaceTypes.Length)];
+                    itemLevel = (ushort)Common.Random.Next(_level / 15, Math.Min(MaxNecklaceLevel, _level / 5 + 1));
+                    break;
+                case 2:
+                    itemType = RingTypes[Common.Random.Next(RingTypes.Length)];
+                    itemLevel = (ushort)Common.Random.Next(_level / 15, Math.Min(MaxRingLevel, _level / 5 + 1));
+                    break;
+                case 3:
+                    itemType = OneHandWeaponTypes[Common.Random.Next(OneHandWeaponTypes.Length)];
+                    itemLevel = (ushort)Common.Random.Next(_level / 10, Math.Min(MaxWeaponLevel, _level / 4 + 1));
+                    break;
+                case 4:
+                    itemType = TwoHandWeaponTypes[Common.Random.Next(TwoHandWeaponTypes.Length)];
+                    itemLevel = (ushort)Common.Random.Next(_level / 10, Math.Min(MaxWeaponLevel, _level / 4 + 1));
+                    break;
+                case 5:
+                    itemType = ArmorTypes[Common.Random.Next(ArmorTypes.Length)];
+                    itemLevel = (ushort)Common.Random.Next(_level / 20, Math.Min(MaxArmorLevel, _level / 11 + 1));
+                    break;
+                case 6:
+                    itemType = ShieldType;
+                    itemLevel = (ushort)Common.Random.Next(_level / 20, Math.Min(MaxShieldLevel, _level / 11 + 1));
+                    break;
+                case 7:
+                    itemType = BootType;
+                    itemLevel = (ushort)Common.Random.Next(_level / 15, Math.Min(MaxBootLevel, _level / 5 + 1));
+                    break;
+            }
+            
+            return (uint)((itemType * 1000) + (itemLevel * 10) + quality);
         }
     }
 }

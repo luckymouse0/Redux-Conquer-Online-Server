@@ -159,6 +159,7 @@
     <Compile Include="Database\Repositories\Repository.cs" />
     <Compile Include="Database\Repositories\SkillRepository.cs" />
     <Compile Include="Database\ServerDatabase.cs" />
+    <Compile Include="Enum\ItemEffects.cs" />
     <Compile Include="Enum\TaskType.cs" />
     <Compile Include="Enum\ActionType.cs" />
     <Compile Include="Enum\AssociateAction.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="Database\Readers\ItemAddReader.cs" />
     <Compile Include="Database\Readers\ItemTypeReader.cs" />
     <Compile Include="Events\GuildWar.cs" />
+    <Compile Include="Items\[721020] MoonBox.cs" />
     <Compile Include="Items\Potions\Boxes\[721330] Mil.Ginseng.cs" />
     <Compile Include="Items\Potions\Boxes\[721332] ChantPill.cs" />
     <Compile Include="Items\Potions\Boxes\[720017] ChantPill.cs" />
@@ -250,7 +252,7 @@
     <Compile Include="Items\Gates\[1060022] ApeCityScroll.cs" />
     <Compile Include="Items\Gates\[1060021] DesertCityScroll.cs" />
     <Compile Include="Items\Gates\[1060020] TwinCityScroll.cs" />
-    <Compile Include="Items\[10600__] HairDye.cs" />
+    <Compile Include="Items\Potions\[10600__] HairDye.cs" />
     <Compile Include="Items\IItem.cs" />
     <Compile Include="Items\[720027] MeteorScroll.cs" />
     <Compile Include="Items\Manager.cs" />
@@ -508,7 +510,6 @@
     <EmbeddedResource Include="Database\Mappings\DbShopItem.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Change Log.txt" />
     <EmbeddedResource Include="Database\Mappings\DbLevExp.hbm.xml" />
     <EmbeddedResource Include="Database\Mappings\DbbugReport.hbm.xml" />
     <EmbeddedResource Include="Database\Mappings\DbTask.hbm.xml" />

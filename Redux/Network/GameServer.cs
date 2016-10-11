@@ -944,7 +944,7 @@ namespace Redux.Game_Server
                         if (Common.PercentSuccess(mainItem.ChanceToUpgradeLevel()))
                         {
                             mainItem.ChangeItemID(mainItem.GetNextItemLevel());
-                            if (Common.PercentSuccess(Constants.SOCKET_RATE))
+                            if (Common.PercentSuccess(Constants.SOCKET_UPGRADE))
                             {
                                 if (mainItem.Gem1 == 0)
                                 {
@@ -991,7 +991,7 @@ namespace Redux.Game_Server
                         if (Common.PercentSuccess(upChance))
                         {
                             mainItem.ChangeItemID(mainItem.GetNextItemQuality());
-                            if (Common.PercentSuccess(Constants.SOCKET_RATE * 2))
+                            if (Common.PercentSuccess(Constants.SOCKET_UPGRADE))
                             {
                                 if (mainItem.Gem1 == 0)
                                 {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Redux.Packets.Game;
+using Redux.Structures;
 
 namespace Redux.Npcs
 {

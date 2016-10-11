@@ -35,6 +35,9 @@ namespace Redux.Game_Server
         public virtual byte Level { get; set; }
         public abstract void SetDisguise(Database.Domain.DbMonstertype _mob, long _duration);
 
+        public long
+            LastPoisonDamage;        //Added to control poison effect damage
+
         public int GetLevelBonusDamageFactor(int l1, int l2)
         {
             int num = l1 - l2;
@@ -158,6 +161,7 @@ namespace Redux.Game_Server
                 if (Life > _dmg)
                 {
                     Life -= (ushort)_dmg;
+
                     //Adds blue name for PK
                     //If both are players
                     if (PlayerManager.Players.ContainsKey(_attacker) && (PlayerManager.Players.ContainsKey(this.UID)))
@@ -210,16 +214,35 @@ namespace Redux.Game_Server
                         }
                     Life = 0;
                 }
-
             }
         }
+
+        public virtual uint ReceivePoisonDamage()
+        {
+            ushort dmg = 0;
+            if ((Alive)&&(HasEffect(ClientEffect.Poison)))
+            {
+                dmg = (ushort)Math.Min(200, Math.Floor(((Convert.ToDouble(Life) / Convert.ToDouble(5000)) * 200)));
+
+                if (Life > dmg)
+                {
+                    Life -= dmg;
+                }
+                else
+                {
+                    Life = 1;
+                }
+            }
+            return ((uint)dmg);
+        }
+
         internal bool sentDeath = false;
         public virtual void Kill(uint _dieType, uint _attacker)
         {
             if (!sentDeath)
             {
                 sentDeath = true;
-                SendToScreen(InteractPacket.Create(_attacker, UID, 0, 0, InteractAction.Kill, _dieType), true);
+                SendToScreen(InteractPacket.Create(_attacker, UID, X, Y, InteractAction.Kill, _dieType), true);
             }
             Life = 0;
         }
@@ -314,8 +337,14 @@ namespace Redux.Game_Server
                 }
             }
 
+            if (_effect == ClientEffect.Poison)     //Added poison damage timer
+            {
+                LastPoisonDamage = Common.Clock;
+            }
+
             return success;
         }
+
         public bool HasEffect(ClientEffect _effect)
         {
             return SpawnPacket.UID > 0 && SpawnPacket.StatusEffects.HasFlag(_effect);
@@ -360,13 +389,26 @@ namespace Redux.Game_Server
 
         public void On_Entity_Timer()
         {
+            if (Alive)
+            {
+                if (HasEffect(ClientEffect.Poison))     //Added poison damage
+                {
+                    if (Common.Clock - LastPoisonDamage > Common.MS_PER_SECOND * 1)
+                    {
+                        SendToScreen(InteractPacket.Create(UID, UID, (ushort)Location.X, (ushort)Location.Y, InteractAction.Poison,
+                        ReceivePoisonDamage()), true);
+
+                        LastPoisonDamage = Common.Clock;
+                    }
+                }
+            }
+
             foreach (var effect in ClientEffects)
                 if (Common.Clock > effect.Value && effect.Value > 0)
                     RemoveEffect(effect.Key);
             
             foreach (var status in ClientStatuses)
-                if (Common.Clock > status.Value.Timeout && status.Value.Timeout > 0)
-                    
+                if (Common.Clock > status.Value.Timeout && status.Value.Timeout > 0)                    
                     RemoveStatus(status.Key);
         }
     }

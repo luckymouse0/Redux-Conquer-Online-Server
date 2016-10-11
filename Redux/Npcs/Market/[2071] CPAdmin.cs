@@ -23,21 +23,22 @@ namespace Redux.Npcs
 
         public override void Run(Game_Server.Player _client, ushort _linkback)
         {
+            /*
             Responses = new List<NpcDialogPacket>();
             AddAvatar();
             switch (_linkback)
             {
                 case 0:
                     AddText("I can help you turn DragonBalls into CP.");
-                    AddOption("DragonBall (215 CP)", 1);
-                    AddOption("DBScroll (2150 CP)", 2);
+                    AddOption("DragonBall (4.000 CP)", 1);
+                    AddOption("DBScroll (40.000 CP)", 2);
                     AddOption("No thank you.", 255);
                     break;
                 case 1:
                     if (_client.HasItem(1088000))
                     {
                         _client.DeleteItem(1088000);
-                        _client.CP += 215;
+                        _client.CP += 4000;
                         AddText("It is finished. Enjoy your Conquer Points.");
                         AddOption("Thanks.", 255);
                     }
@@ -51,7 +52,7 @@ namespace Redux.Npcs
                     if (_client.HasItem(720028))
                     {
                         _client.DeleteItem(720028);
-                        _client.CP += 2150;
+                        _client.CP += 40000;
                         AddText("It is finished. Enjoy your Conquer Points.");
                         AddOption("Thanks.", 255);
                     }
@@ -64,6 +65,7 @@ namespace Redux.Npcs
             }
             AddFinish();
             Send();
+             */
 
         }
     }

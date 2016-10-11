@@ -31,21 +31,21 @@ namespace Redux.Npcs
                 case 0:
                     {
                         AddText("Hello, did you noticed that MagicArtisan can only level items up to 120?");
-                        AddText("I can upgrade it above 120 up to 130 ,but it costs 1 DragonBall for each upgrade.");
+                        AddText("I can upgrade it above 120 up to 130 ,but it costs 1 DragonBall Scroll for each upgrade.");
                         AddOption("Yes, I want.", 2);
                         AddOption("No. I like it this way.", 255);
                         break;
                     }
                 case 2:
                     {
-                        AddText("It costs 1 DragonBall for any item above level 110.Are you really sure you want to do that?! ");
+                        AddText("It costs 1 DragonBall Scroll for any item above level 110.Are you really sure you want to do that?! ");
                         AddOption("Yeah, upgrade it! ", 3);
                         AddOption("No. I like it this way.", 255);
                         break;
                     }
                 case 3:
                     {
-                        AddText("Each upgrade requires 1 DragonBall and there is no turning back! ");
+                        AddText("Each upgrade requires 1 DragonBall Scroll and there is no turning back! ");
                         AddText("What item would you like me to upgrade?");
                         AddOption("Helmet/Earrings/TaoCap ", 11);
                         AddOption("Necklace/Bag ", 12);
@@ -72,9 +72,9 @@ namespace Redux.Npcs
                             AddText("There must be some mistake. You must be wearing an item before you may upgrade it!");
                             AddOption("Nevermind", 255);
                         }
-                        else if (!_client.HasItem(1088000))
+                        else if (!_client.HasItem(Constants.DB_SCROLL_ID))
                         {
-                            AddText("There must be some mistake. You must pay an DragonBall before you may upgrade it!");
+                            AddText("There must be some mistake. You must pay an DragonBall Scroll before you may upgrade it!");
                             AddOption("Nevermind", 255);
                         }
                         else if (equipment.EquipmentLevel <= 110)
@@ -99,7 +99,7 @@ namespace Redux.Npcs
                         else
                         {
                             equipment.ChangeItemID(equipment.GetNextItemLevel());
-                            _client.DeleteItem(1088000);
+                            _client.DeleteItem(Constants.DB_SCROLL_ID);
                             _client.Send(ItemInformationPacket.Create(equipment, Enum.ItemInfoAction.Update));
                             equipment.Save();
                         }

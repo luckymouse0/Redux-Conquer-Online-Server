@@ -87,5 +87,11 @@ namespace Redux.Enum
         AdvancedFly = 8003,
         Intensify = 9000,
         ArrowRain = 8030,
+
+        //Passive Skills
+        Reflect = 3060,
+        Poison = 10200,
+        HealBacksword = 10201,
+        ManaBacksword = 10202,
     }
 }

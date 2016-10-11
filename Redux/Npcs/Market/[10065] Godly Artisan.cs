@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Redux.Packets.Game;
+using Redux.Enum;
 
 namespace Redux.Npcs
 {
@@ -14,7 +15,6 @@ namespace Redux.Npcs
     /// </summary>
     public class NPC_10065 : INpc
     {
-
         public NPC_10065(Game_Server.Player _client)
             : base(_client)
         {
@@ -24,6 +24,206 @@ namespace Redux.Npcs
 
         public override void Run(Game_Server.Player _client, ushort _linkback)
         {
+            Responses = new List<NpcDialogPacket>();
+            AddAvatar();
+            switch (_linkback)
+            {
+                case 0:
+                    {
+                        AddText("Hello , did you knew that an socketed equipment is better than one without sockets?");
+                        AddText("I can try to socket like Twin City Artisan but without leveling up");
+                        AddOption("Try Socket my weapon 1 time (1 Meteor)", 1);
+                        AddOption("Try Socket my weapon 10 times (1 Meteor Scroll)", 2);
+                        AddOption("Try Socket my weapon (All Meteors)", 3);
+                        AddOption("Try Socket my weapon (All Meteor Scrolls)", 4);
+                        AddOption("No. I like it this way.", 255);
+                        break;
+                    }
+                case 1:
+                    {
+                        var equipment = _client.Equipment.GetItemBySlot(Enum.ItemLocation.WeaponR);
+                        if (equipment == null)
+                        {
+                            AddText("There must be some mistake. You must be wearing a weapon before I can help you socket it!");
+                            AddOption("Nevermind", 255);
+                        }
+                        else if (equipment.Gem2 > 0)
+                        {
+                            AddText("There must be some mistake. Your weapon already has the maximum number of sockets!");
+                            AddOption("Nevermind", 255);
+                        }
+                        else if (!_client.HasItem(Constants.METEOR_ID, 1))
+                        {
+                            AddText("There must be some mistake. You do not have 1 Meteor required to socket this item!");
+                            AddOption("Nevermind", 255);
+                        }
+                        else
+                        {
+                            _client.DeleteItem(Constants.METEOR_ID);
+
+                            if (Common.PercentSuccess(Constants.SOCKET_UPGRADE))
+                            {
+                                if (equipment.Gem1 == 0)
+                                {
+                                    equipment.Gem1 = 255;
+                                    _client.SendMessage("You have successfully socketed your " + equipment.BaseItem.Name, ChatType.System);
+                                }
+                                else if (equipment.Gem2 == 0)
+                                {
+                                    equipment.Gem2 = 255;
+                                    _client.SendMessage("You have successfully socketed your " + equipment.BaseItem.Name, ChatType.System);
+                                }
+                                equipment.Save();
+                                _client.Send(ItemInformationPacket.Create(equipment));
+                            }
+                        }
+                        break;
+                    }
+                case 2:
+                    {
+                        var equipment = _client.Equipment.GetItemBySlot(Enum.ItemLocation.WeaponR);
+                        if (equipment == null)
+                        {
+                            AddText("There must be some mistake. You must be wearing a weapon before I can help you socket it!");
+                            AddOption("Nevermind", 255);
+                        }
+                        else if (equipment.Gem2 > 0)
+                        {
+                            AddText("There must be some mistake. Your weapon already has the maximum number of sockets!");
+                            AddOption("Nevermind", 255);
+                        }
+                        else if (!_client.HasItem(Constants.METEOR_SCROLL_ID, 1))
+                        {
+                            AddText("There must be some mistake. You do not have 1 Meteor Scroll required to socket this item!");
+                            AddOption("Nevermind", 255);
+                        }
+                        else
+                        {
+                            _client.DeleteItem(Constants.METEOR_SCROLL_ID);
+
+                            for (int i = 0; i < 10; i++)
+                            {
+                                if (Common.PercentSuccess(Constants.SOCKET_UPGRADE))
+                                {
+                                    if (equipment.Gem1 == 0)
+                                    {
+                                        equipment.Gem1 = 255;
+                                        _client.SendMessage("You have successfully socketed your " + equipment.BaseItem.Name, ChatType.System);
+                                    }
+                                    else if (equipment.Gem2 == 0)
+                                    {
+                                        equipment.Gem2 = 255;
+                                        _client.SendMessage("You have successfully socketed your " + equipment.BaseItem.Name, ChatType.System);
+                                    }
+                                    equipment.Save();
+                                    _client.Send(ItemInformationPacket.Create(equipment));
+                                }
+                            }
+                        }
+                        break;
+                    }
+                case 3:
+                    {
+                        var equipment = _client.Equipment.GetItemBySlot(Enum.ItemLocation.WeaponR);
+                        if (equipment == null)
+                        {
+                            AddText("There must be some mistake. You must be wearing a weapon before I can help you socket it!");
+                            AddOption("Nevermind", 255);
+                        }
+                        else if (equipment.Gem2 > 0)
+                        {
+                            AddText("There must be some mistake. Your weapon already has the maximum number of sockets!");
+                            AddOption("Nevermind", 255);
+                        }
+                        else if (!_client.HasItem(Constants.METEOR_ID, 1))
+                        {
+                            AddText("There must be some mistake. You do not have 1 Meteor required to socket this item!");
+                            AddOption("Nevermind", 255);
+                        }
+                        else
+                        {
+
+                            while (_client.DeleteItem(Constants.METEOR_ID))
+                            {
+                                if (Common.PercentSuccess(Constants.SOCKET_UPGRADE))
+                                {
+                                    if (equipment.Gem1 == 0)
+                                    {
+                                        equipment.Gem1 = 255;
+                                        _client.SendMessage("You have successfully socketed your " + equipment.BaseItem.Name, ChatType.System);
+                                    }
+                                    else if (equipment.Gem2 == 0)
+                                    {
+                                        equipment.Gem2 = 255;
+                                        _client.SendMessage("You have successfully socketed your " + equipment.BaseItem.Name, ChatType.System);
+                                    }
+                                    equipment.Save();
+                                    _client.Send(ItemInformationPacket.Create(equipment));
+                                }
+                            }
+                        }
+                        break;
+                    }
+                case 4:
+                    {
+                        var equipment = _client.Equipment.GetItemBySlot(Enum.ItemLocation.WeaponR);
+                        if (equipment == null)
+                        {
+                            AddText("There must be some mistake. You must be wearing a weapon before I can help you socket it!");
+                            AddOption("Nevermind", 255);
+                        }
+                        else if (equipment.Gem2 > 0)
+                        {
+                            AddText("There must be some mistake. Your weapon already has the maximum number of sockets!");
+                            AddOption("Nevermind", 255);
+                        }
+                        else if (!_client.HasItem(Constants.METEOR_SCROLL_ID, 1))
+                        {
+                            AddText("There must be some mistake. You do not have 1 Meteor Scroll required to socket this item!");
+                            AddOption("Nevermind", 255);
+                        }
+                        else
+                        {
+                            while (_client.DeleteItem(Constants.METEOR_SCROLL_ID))
+                            {
+                                for (int i = 0; i < 10; i++)
+                                {
+                                    if (Common.PercentSuccess(Constants.SOCKET_UPGRADE))
+                                    {
+                                        if (equipment.Gem1 == 0)
+                                        {
+                                            equipment.Gem1 = 255;
+                                            _client.SendMessage("You have successfully socketed your " + equipment.BaseItem.Name, ChatType.System);
+                                        }
+                                        else if (equipment.Gem2 == 0)
+                                        {
+                                            equipment.Gem2 = 255;
+                                            _client.SendMessage("You have successfully socketed your " + equipment.BaseItem.Name, ChatType.System);
+                                        }
+                                        equipment.Save();
+                                        _client.Send(ItemInformationPacket.Create(equipment));
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    }
+            }
+
+            AddFinish();
+            Send();
+        }
+    }
+}
+
+
+                    /*for (var i = 0; i < cost; i++)
+                                    _client.DeleteItem(Constants.DRAGONBALL_ID);
+                                equipment.Save();
+                                _client.Send(ItemInformationPacket.Create(equipment));
+                                AddText("It is done! Please enjoy your new equipment.");
+                                AddOption("Thanks!", 255);*/
+            /*
             Responses = new List<NpcDialogPacket>();
             AddAvatar();
             switch (_linkback)
@@ -279,7 +479,7 @@ namespace Redux.Npcs
             }
             AddFinish();
             Send();
-
+             
         }
     }
-}
+}*/

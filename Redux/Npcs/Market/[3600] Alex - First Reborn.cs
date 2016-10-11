@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Redux.Packets.Game;
 using Redux.Enum;
+using Redux.Structures;
 
 namespace Redux.Npcs
 {
@@ -68,7 +69,7 @@ namespace Redux.Npcs
                     if (_client.HasItem(Constants.CELESTIAL_STONE_ID))
                     {
                         AddText("You can choose to either receive a gem of great power or bless your equipment for even greater strength. Which would you like?");
-                        AddOption("Blessed Rebirth", 3);
+                        //AddOption("Blessed Rebirth", 3);
                         AddOption("Gem Rebirth", 5);
                         AddOption("I'm not sure...", 255);
                     }
@@ -140,6 +141,85 @@ namespace Redux.Npcs
                             else//Give Super Gem                         
                                 _client.CreateItem((uint)(BASE_GEM_ID + baseGemRequest * 10));
 
+                            #region Garment Reward
+                            if (_client.IsMale)
+                            {
+                                switch (Common.Random.Next(30))
+                                {
+                                    case 0: _client.CreateItem((uint)(181305)); break;
+                                    case 1: _client.CreateItem((uint)(181315)); break;
+                                    case 2: _client.CreateItem((uint)(181325)); break;
+                                    case 3: _client.CreateItem((uint)(181335)); break;
+                                    case 4: _client.CreateItem((uint)(181345)); break;
+                                    case 5: _client.CreateItem((uint)(181355)); break;
+                                    case 6: _client.CreateItem((uint)(181365)); break;
+                                    case 7: _client.CreateItem((uint)(181375)); break;
+                                    case 8: _client.CreateItem((uint)(181385)); break;
+                                    case 9: _client.CreateItem((uint)(181405)); break;
+                                    case 10: _client.CreateItem((uint)(181415)); break;
+                                    case 11: _client.CreateItem((uint)(181425)); break;
+                                    case 12: _client.CreateItem((uint)(181505)); break;
+                                    case 13: _client.CreateItem((uint)(181515)); break;
+                                    case 14: _client.CreateItem((uint)(181525)); break;
+                                    case 15: _client.CreateItem((uint)(181605)); break;
+                                    case 16: _client.CreateItem((uint)(181615)); break;
+                                    case 17: _client.CreateItem((uint)(181625)); break;
+                                    case 18: _client.CreateItem((uint)(181705)); break;
+                                    case 19: _client.CreateItem((uint)(181715)); break;
+                                    case 20: _client.CreateItem((uint)(181725)); break;
+                                    case 21: _client.CreateItem((uint)(181805)); break;
+                                    case 22: _client.CreateItem((uint)(181815)); break;
+                                    case 23: _client.CreateItem((uint)(181825)); break;
+                                    case 24: _client.CreateItem((uint)(181905)); break;
+                                    case 25: _client.CreateItem((uint)(181915)); break;
+                                    case 26: _client.CreateItem((uint)(181925)); break;
+                                    case 27: _client.CreateItem((uint)(182305)); break;
+                                    case 28: _client.CreateItem((uint)(182315)); break;
+                                    case 29: _client.CreateItem((uint)(182325)); break;
+                                }
+                            }
+                            else
+                            {
+                                switch (Common.Random.Next(34))
+                                {
+                                    case 0: _client.CreateItem((uint)(181305)); break;
+                                    case 1: _client.CreateItem((uint)(181315)); break;
+                                    case 2: _client.CreateItem((uint)(181325)); break;
+                                    case 3: _client.CreateItem((uint)(181335)); break;
+                                    case 4: _client.CreateItem((uint)(181345)); break;
+                                    case 5: _client.CreateItem((uint)(181355)); break;
+                                    case 6: _client.CreateItem((uint)(181365)); break;
+                                    case 7: _client.CreateItem((uint)(181375)); break;
+                                    case 8: _client.CreateItem((uint)(181385)); break;
+                                    case 9: _client.CreateItem((uint)(181405)); break;
+                                    case 10: _client.CreateItem((uint)(181415)); break;
+                                    case 11: _client.CreateItem((uint)(181425)); break;
+                                    case 12: _client.CreateItem((uint)(181505)); break;
+                                    case 13: _client.CreateItem((uint)(181515)); break;
+                                    case 14: _client.CreateItem((uint)(181525)); break;
+                                    case 15: _client.CreateItem((uint)(181605)); break;
+                                    case 16: _client.CreateItem((uint)(181615)); break;
+                                    case 17: _client.CreateItem((uint)(181625)); break;
+                                    case 18: _client.CreateItem((uint)(181705)); break;
+                                    case 19: _client.CreateItem((uint)(181715)); break;
+                                    case 20: _client.CreateItem((uint)(181725)); break;
+                                    case 21: _client.CreateItem((uint)(181805)); break;
+                                    case 22: _client.CreateItem((uint)(181815)); break;
+                                    case 23: _client.CreateItem((uint)(181825)); break;
+                                    case 24: _client.CreateItem((uint)(181905)); break;
+                                    case 25: _client.CreateItem((uint)(181915)); break;
+                                    case 26: _client.CreateItem((uint)(181925)); break;
+                                    case 27: _client.CreateItem((uint)(182305)); break;
+                                    case 28: _client.CreateItem((uint)(182315)); break;
+                                    case 29: _client.CreateItem((uint)(182325)); break;
+                                    case 30: _client.CreateItem((uint)(182385)); break;
+                                    case 31: _client.CreateItem((uint)(182365)); break;
+                                    case 32: _client.CreateItem((uint)(182345)); break;
+                                    case 33: _client.CreateItem((uint)(182335)); break;
+                                }
+                            }
+                            #endregion
+
                             var path = (uint)_client.ProfessionType % 10 * 10 + (uint)_linkback % 10;
                             if (_client.ProfessionType == ProfessionType.Archer)
                                 path = 50 + (uint)_linkback % 10;
@@ -176,6 +256,46 @@ namespace Redux.Npcs
                                     _client.Character.Profession = 41;
                                     break;
                             }
+
+                            #region Reborn Weapons
+
+                            if ((_client.ProfessionType == ProfessionType.Warrior)||(_client.ProfessionType == ProfessionType.Trojan))
+                            {
+                                //Poison blade
+                                var itemInfo = Database.ServerDatabase.Context.ItemInformation.GetById(410077);
+                                var coItem = new ConquerItem((uint)Common.ItemGenerator.Counter, itemInfo);
+                                coItem.Effect = (byte)ItemEffects.Poison;
+                                coItem.SetOwner(_client);
+                                if (_client.AddItem(coItem))
+                                    _client.Send(ItemInformationPacket.Create(coItem));
+                                //
+                            }
+                            else if (_client.ProfessionType == ProfessionType.Archer)
+                            {
+                                //Defense (Suicide) bow (Negates fly because of shield buff) so nothing here. 
+                            }
+                            else if (_client.ProfessionType == ProfessionType.FireTaoist)
+                            {
+                                //Health backsword that will randomly increase health by 310.
+                                var itemInfo = Database.ServerDatabase.Context.ItemInformation.GetById(421077);
+                                var coItem = new ConquerItem((uint)Common.ItemGenerator.Counter, itemInfo);
+                                coItem.Effect = (byte)ItemEffects.Heal;
+                                coItem.SetOwner(_client);
+                                if (_client.AddItem(coItem))
+                                    _client.Send(ItemInformationPacket.Create(coItem));                                
+                            }
+                            else if (_client.ProfessionType == ProfessionType.WaterTaoist)
+                            {
+                                //Mana backsword that will randomly increase mana by 310
+                                var itemInfo = Database.ServerDatabase.Context.ItemInformation.GetById(421077);
+                                var coItem = new ConquerItem((uint)Common.ItemGenerator.Counter, itemInfo);
+                                coItem.Effect = (byte)ItemEffects.Mana;
+                                coItem.SetOwner(_client);
+                                if (_client.AddItem(coItem))
+                                    _client.Send(ItemInformationPacket.Create(coItem)); 
+                            }
+
+                            #endregion
 
                             #region Down Level Items
                             for (ItemLocation location = ItemLocation.Helmet; location < ItemLocation.Garment; location++)

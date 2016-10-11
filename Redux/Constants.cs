@@ -4,24 +4,62 @@ namespace Redux
     public static class Constants
     {
         public const int EXP_BALL_LIMIT = 10;
-        public const uint EMERALD_ID = 1080001, DB_SCROLL_ID = 720028, DRAGONBALL_ID = 1088000, METEOR_SCROLL_ID = 720027, METEOR_ID = 1088001, METEOR_TEAR_ID = 1088002, MOONBOX_ID = 721020, CELESTIAL_STONE_ID = 721259;
-        public const bool IsSameSexMarriageAllowed = true;
-        public const int EXP_RATE = 5,
-                              PROF_RATE = 5,
-                              SKILL_RATE = 5,
-                              GOLD_RATE = 5;
 
-        public const double SOCKET_RATE = .4,
-            CHANCE_REFINED = 10.0,
-            CHANCE_UNIQUE = 6.0,
-            CHANCE_ELITE = 1.0,
-            CHANCE_SUPER = 0.3,
-            CHANCE_PLUS = 2.0,
-            CHANCE_METEOR = 0.72,
-            CHANCE_DRAGONBALL = 0.0556,
-            CHANCE_POTION = 4,
-            CHANCE_REFINED_GEM = 10,
-            CHANCE_SUPER_GEM = 1;
+        public const bool IsSameSexMarriageAllowed = true;
+
+        public const uint 
+            EMERALD_ID = 1080001, 
+            DB_SCROLL_ID = 720028, 
+            DRAGONBALL_ID = 1088000, 
+            METEOR_SCROLL_ID = 720027, 
+            METEOR_ID = 1088001, 
+            METEOR_TEAR_ID = 1088002, 
+            MOONBOX_ID = 721020, 
+            CELESTIAL_STONE_ID = 721259;
+        
+        public const int
+           EXP_RATE = 1,
+           PROF_RATE = 1,
+           SKILL_RATE = 1,
+           GOLD_RATE = 1;
+
+        public const double
+            CHANCE_CP = 100,
+            CHANCE_DROP_GOLD = 20,
+            CHANCE_DROP_GEAR = 20,
+            SOCKET_DROP = 0.50,
+            SOCKET_UPGRADE = 0.01,
+            CHANCE_REFINED = 0.0015,
+            CHANCE_UNIQUE = 0.0025,
+            CHANCE_ELITE = 0.0005,
+            CHANCE_SUPER = 0.0001,
+            CHANCE_PLUS = 0.00035,
+            CHANCE_METEOR = 0.0013,
+            CHANCE_DRAGONBALL = 0.000125,
+            CHANCE_POTION = 10,
+            CHANCE_REFINED_GEM = 0.0013,
+            CHANCE_SUPER_GEM = 0.000125;
+
+        //ORIGINAL RATES
+/*        public const int 
+                    EXP_RATE = 5,
+                    PROF_RATE = 5,
+                    SKILL_RATE = 5,
+                    GOLD_RATE = 5;
+
+          public const double 
+                    SOCKET_RATE = .4,
+                    CHANCE_REFINED = 10.0,
+                    CHANCE_UNIQUE = 6.0,
+                    CHANCE_ELITE = 1.0,
+                    CHANCE_SUPER = 0.3,
+                    CHANCE_PLUS = 2.0,
+                    CHANCE_METEOR = 0.72,
+                    CHANCE_DRAGONBALL = 0.0556,
+                    CHANCE_POTION = 4,
+                    CHANCE_REFINED_GEM = 10,
+                    CHANCE_SUPER_GEM = 1;
+*/
 
         public static bool DEBUG_MODE;
         public const byte RESPONSE_INVALID = 1,

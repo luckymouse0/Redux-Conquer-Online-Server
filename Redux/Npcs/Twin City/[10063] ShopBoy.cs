@@ -30,7 +30,7 @@ namespace Redux.Npcs
                     AddText("Our shop is famous for dyeing. If you want to have your equipment dyed, please wear them before you enter. You");
                     AddText(" have a wide choice of colors. One meteor will be charged before you try the colors. Do you want a try?");
                     AddOption("Yes, here is a meteor", 1);
-                    AddOption("Do you have any good wine?", 2);
+                    //AddOption("Do you have any good wine?", 2);
                     AddOption("Never mind", 255);
                     break;
                 case 1:

@@ -26,7 +26,7 @@ namespace Redux.Npcs
 
         public override void Run(Game_Server.Player _client, ushort _linkback)
         {
-            Responses = new List<NpcDialogPacket>();
+            /*Responses = new List<NpcDialogPacket>();
             AddAvatar();
             switch (_linkback)
             {
@@ -111,7 +111,7 @@ namespace Redux.Npcs
             }
             AddFinish();
             Send();
-
+            */
         }
     }
 }
