@@ -68,7 +68,7 @@ namespace Redux.Game_Server
             NextMine = Common.Clock, 
             LastStep = Common.Clock,
             LastCool = Common.Clock,
-            LastRecover = Common.Clock; //Agregado para curarse al senterse
+            LastRecover = Common.Clock; //Added to know when was the last recover while sitting.
 
         private ushort transformation, face, body = 0;
         private byte stamina;
@@ -1017,7 +1017,7 @@ namespace Redux.Game_Server
             { Disconnect(); Console.WriteLine("Connection timeout for {0} with {1} ms latency", Name, Common.Clock - LastPingReceived); return; }
             if (Alive)
             {
-                //Recuperar HP al sentarse
+                //Recover HP while sitting
                 if ((Action == ActionType.Sit) && (Common.Clock - LastRecover > Common.MS_PER_SECOND * 10) && (Life < MaximumLife))
                 {
                     if (Common.Clock - LastSitAt > Common.MS_PER_SECOND * 10)
